@@ -1,406 +1,692 @@
+#使用指南
 {{indexmenu_n>4}}
-/\*\* \* @brief 视频草稿，调用者可以自行生成草稿或直接草稿进行任意编辑，然后使用 MSVEditor
-实时生成草稿的预览，也可以使用 MSVExporter 对草稿进行导出 \*/
+/\*\*
+
+```
+ * @brief 视频草稿，调用者可以自行生成草稿或直接草稿进行任意编辑，然后使用 MSVEditor
+实时生成草稿的预览，也可以使用 MSVExporter 对草稿进行导出 
+
+*/
 @interface MSVDraft : NSObject
 
-/\*\* \* @brief 主轨道片段集合，主轨道片段按照其 durationAtMainTrack
+/** 
+
+* @brief 主轨道片段集合，主轨道片段按照其 durationAtMainTrack
 所指定的时长顺序排列组成视频的主轨道，草稿的长度由主轨道时长决定
-\*/ @property (nonatomic, strong, readonly) NSArray\<MSVMainTrackClip
-\*\> \*mainTrackClips;
 
-/\*\* \* @brief 音频片段集合，草稿的音频为由 mainTrackClips 中的音频与 audioClips
-按照各自的音量进行混合产生 \*/ @property (nonatomic, strong,
-readonly) NSArray\<MSVAudioClip \*\> \*audioClips;
+*/ 
+@property (nonatomic, strong, readonly) NSArray <MSVMainTrackClip*> 
+*mainTrackClips;
 
-/\*\* \* @brief 特效集合，当前支持
+/** 
+
+* @brief 音频片段集合，草稿的音频为由 mainTrackClips 中的音频与 audioClips
+按照各自的音量进行混合产生 
+*/ 
+@property (nonatomic, strong,readonly) NSArray<MSVAudioClip *> *audioClips;
+
+/** 
+
+* @brief 特效集合，当前支持
 MSVExternalFilterEffect、MSVLUTFilterEffect、MSVImageEffect、MSVRepeatEffect、MSVSpeedEffect，这些效果均只应用到主轨上
-\*/ @property (nonatomic, strong, readonly) NSArray \*effects;
+*/ 
+@property (nonatomic, strong, readonly) NSArray *effects;
 
-/\*\* \* @brief 草稿原始总时长（不考虑时间特效，不考虑 timeRange） \*/ @property (nonatomic,
+/** 
+
+* @brief 草稿原始总时长（不考虑时间特效，不考虑 timeRange） 
+
+*/ 
+@property (nonatomic,
 assign, readonly) NSTimeInterval originalDuration;
 
-/\*\* \* @brief 草稿总时长（考虑时间特效，不考虑 timeRange） \*/ @property (nonatomic,
+/** 
+
+* @brief 草稿总时长（考虑时间特效，不考虑 timeRange） 
+*/ 
+@property (nonatomic,
 assign, readonly) NSTimeInterval duration;
 
-/\*\* \* @brief 视频的大小，预览时如果窗口的大小与 videoSize 的大小不一致，将按照
-editor.previewScalingMode 指定的缩放方式进行缩放 \*/ @property (nonatomic, assign)
+/** 
+
+* @brief 视频的大小，预览时如果窗口的大小与 videoSize 的大小不一致，将按照
+editor.previewScalingMode 指定的缩放方式进行缩放 
+*/
+ 
+@property (nonatomic, assign)
 CGSize videoSize;
 
-/\*\* \* @brief 有效的时间区域，其他部分将被忽略 \* @warning
-这里的时间区间是以应用完时间特效之后的区间，调用者如果设置了
-timeRange，对主轨进行相关增删改或更新时间特效之后要配合调整 timeRange，以保证应用正确的 timeRange \*/
+/** 
+
+* @brief 有效的时间区域，其他部分将被忽略 
+* @warning这里的时间区间是以应用完时间特效之后的区间，调用者如果设置了timeRange，对主轨进行相关增删改或更新时间特效之后要配合调整 timeRange，以保证应用正确的 timeRange 
+
+*/
 @property (nonatomic, assign) MovieousTimeRange timeRange;
 
-/\*\* \* @brief 使用音视频文件地址来初始化一份草稿，初始化后的草稿将包含一个 MSVMainTrackClip 指向该文件的地址
-\* @param URL 音视频文件的地址 \* @param outError 如果发生错误，返回发生的错误 \* @return
-初始化成功的草稿对象 \*/ + (instancetype)draftWithAVURL:(NSURL \*)URL
-error:(NSError \*\*)outError;
+/** 
 
-/\*\* \* @brief 使用图片文件地址来创建一个草稿对象，初始化后的草稿将包含一个 MSVMainTrackClip 指向该文件的地址
-\* @param URL 图片文件的地址 \* @param outError 如果发生错误，返回发生的错误 \* @return
-创建成功则返回草稿对象，失败返回 nil \*/ +
-(instancetype)draftWithImageURL:(NSURL \*)URL error:(NSError
-\*\*)outError;
+* @brief 使用音视频文件地址来初始化一份草稿，初始化后的草稿将包含一个 MSVMainTrackClip 指向该文件的地址
+* @param URL 音视频文件的地址 
+* @param outError 如果发生错误，返回发生的错误 
+* @return初始化成功的草稿对象 
 
-/\*\* \* @brief 初始化草稿对象 \* @param mainTrackClipType 主轨道片段类型 \* @param
-URL 主轨道片段的地址 \* @param outError 如果发生错误，返回发生的错误 \* @return
-初始化成功则返回草稿对象，失败返回 nil \*/ -
-(instancetype)initWithMainTrackClipType:(MSVMainTrackClipType)mainTrackClipType
-URL:(NSURL \*)URL error:(NSError \*\*)outError;
+*/ 
 
-/\*\* \* @brief 生成草稿的预览截屏 \* @param count 预览截屏的数量 \* @param
-withinTimeRange 是否只生成 timeRange 范围内的截图 \* @param handler
-完成后的回调，timestamp：截屏时间戳，snapshot：截屏，error：如发生错误即所发生的错误 \*/
++ (instancetype)draftWithAVURL:(NSURL *)URL
+error:(NSError **)outError;
+
+/** 
+
+* @brief 使用图片文件地址来创建一个草稿对象，初始化后的草稿将包含一个 MSVMainTrackClip 指向该文件的地址
+* @param URL 图片文件的地址 
+* @param outError 如果发生错误，返回发生的错误 
+* @return创建成功则返回草稿对象，失败返回 nil 
+*/ 
+
++(instancetype)draftWithImageURL:(NSURL *)URL error:(NSError
+**)outError;
+
+/** 
+* @brief 初始化草稿对象 
+* @param mainTrackClipType 主轨道片段类型 
+* @paramURL 主轨道片段的地址 
+* @param outError 如果发生错误，返回发生的错误 
+* @return初始化成功则返回草稿对象，失败返回 nil 
+*/
+ 
+-(instancetype)initWithMainTrackClipType:(MSVMainTrackClipType)mainTrackClipType
+URL:(NSURL *)URL error:(NSError **)outError;
+
+/** 
+* @brief 生成草稿的预览截屏 
+* @param count 预览截屏的数量 
+* @paramwithinTimeRange 是否只生成 timeRange 范围内的截图 * @param handler完成后的回调，timestamp：截屏时间戳，snapshot：截屏，error：如发生错误即所发生的错误 
+*/
+
 - (void)generateSnapshotsWithCount:(NSUInteger)count
 withinTimeRange:(BOOL)withinTimeRange completionHanler:(void
-(^)(NSTimeInterval timestamp, UIImage \*snapshot, NSError
-\*error))handler;
+(^)(NSTimeInterval timestamp, UIImage *snapshot, NSError
+*error))handler;
 
-/\*\* \* @brief 更新主轨片段集，非 readonly
-的参数可以直接在相关对象中调整，其他操作（增、删、替换等）需要使用该接口进行刷新
-\* @param mainTrackClips 新的主轨片段集 \* @param outError 如果发生错误，返回发生的错误 \*
-@return 有效返回 YES，无效返回 NO \*/ -
-(BOOL)updateMainTrackClips:(NSArray\<MSVMainTrackClip \*\>
-\*)mainTrackClips error:(NSError \*\*)outError;
+/** 
+* @brief 更新主轨片段集，非 readonly的参数可以直接在相关对象中调整，其他操作（增、删、替换等）需要使用该接口进行刷新
+* @param mainTrackClips 新的主轨片段集 
+* @param outError 如果发生错误，返回发生的错误 
+*@return 有效返回 YES，无效返回 NO 
+*/ 
+-(BOOL)updateMainTrackClips:(NSArray<MSVMainTrackClip *> *)mainTrackClips error:(NSError **)outError;
 
-/\*\* \* @brief 更新音频片段集，非 readonly
-的参数可以直接在相关对象中调整，其他操作（增、删、替换等）需要使用该接口进行刷新
-\* @param audioClips 新的音频片段集合 \* @param outError 如果发生错误，返回发生的错误 \*
-@return 有效返回 YES，无效返回 NO \*/ -
-(BOOL)updateAudioClips:(NSArray\<MSVAudioClip \*\> \*)audioClips
-error:(NSError \*\*)outError;
+/** 
+* @brief 更新音频片段集，非 readonly的参数可以直接在相关对象中调整，其他操作（增、删、替换等）需要使用该接口进行刷新
+* @param audioClips 新的音频片段集合
+* @param outError 如果发生错误，返回发生的错误 
+*@return 有效返回 YES，无效返回 NO 
+*/ 
 
-/\*\* \* @brief 更新特效集合 \* @param effects 新的特效集合 \* @param outError
-如果发生错误，返回发生的错误 \* @return 有效返回 YES，无效返回 NO \*/ -
-(BOOL)updateEffects:(NSArray \*)effects error:(NSError \*\*)outError;
+-(BOOL)updateAudioClips:(NSArray\<MSVAudioClip *> *)audioClips
+error:(NSError **)outError;
 
-/\*\* \* @brief 验证当前草稿是否能够有效 \* @param outError 如果发生错误，返回发生的错误 \*
-@return 有效返回 YES，无效返回 NO \*/ -
-(BOOL)validateForRecorderWithError:(NSError \*\*)outError;
+/** 
+* @brief 更新特效集合 
+* @param effects 新的特效集合 
+* @param outError如果发生错误，返回发生的错误 
+* @return 有效返回 YES，无效返回 NO 
+*/
+ 
+-(BOOL)updateEffects:(NSArray *)effects error:(NSError **)outError;
 
-/\*\* \* @brief 验证草稿是否有效 \* @param outError 如果发生错误，返回发生的错误 \* @return
-有效返回 YES，无效返回 NO \*/ - (BOOL)validateForWithError:(NSError
-\*\*)outError;
+/** 
+* @brief 验证当前草稿是否能够有效 
+* @param outError 如果发生错误，返回发生的错误
+* @return 有效返回 YES，无效返回 NO 
+*/ 
 
-/\*\* \* @brief
-更新音量的操作是实时进行了，当你需要批量修改很多片段的音量时为了提高操作的效率请先调用该方法，然后进行相关音量修改，最后调用
--commitVolumeChange 方法提交修改。如果不按照这种范式进行调用那每次修改音量都会触发更新操作，这将会导致 \*/ -
-(void)beginVolumeChangeTransaction;
+-(BOOL)validateForRecorderWithError:(NSError**)outError;
 
-/\*\* \* @brief 提交音量更新 \*/ - (BOOL)commitVolumeChangeWithError:(NSError
-\*\*)outError;
+/** 
+* @brief 验证草稿是否有效 
+* @param outError 如果发生错误，返回发生的错误 
+* @return
+有效返回 YES，无效返回 NO 
+*/ 
+- (BOOL)validateForWithError:(NSError
+**)outError;
 
-/\*\* \* @brief 除了更新音量以外的其他操作，当你需要批量对相关属性进行操作时可以调用该方法开始一个
-transaction，然后再完成所有操作之后再调用 -commitChangeWithError: 方法提交所有修改 \*/
+/** 
+* @brief更新音量的操作是实时进行了，当你需要批量修改很多片段的音量时为了提高操作的效率请先调用该方法，然后进行相关音量修改，最后调用-commitVolumeChange 方法提交修改。如果不按照这种范式进行调用那每次修改音量都会触发更新操作，这将会导致 
+*/ 
+-(void)beginVolumeChangeTransaction;
+
+/** 
+* @brief 提交音量更新
+*/ 
+- (BOOL)commitVolumeChangeWithError:(NSError
+**)outError;
+
+/** 
+* @brief 除了更新音量以外的其他操作，当你需要批量对相关属性进行操作时可以调用该方法开始一个transaction，然后再完成所有操作之后再调用 -commitChangeWithError: 方法提交所有修改 
+*/
 - (void)beginChangeTransaction;
 
-/\*\* \* @brief 取消当前批量更新 transaction \*/ -
-(void)cancelChangeTransaction;
+/** 
+* @brief 取消当前批量更新 transaction 
+*/ 
+-(void)cancelChangeTransaction;
 
-/\*\* \* @brief 提交一般属性的更新 \*/ - (BOOL)commitChangeWithError:(NSError
-\*\*)outError;
+/** 
+* @brief 提交一般属性的更新 
+*/
+ - (BOOL)commitChangeWithError:(NSError
+**)outError;
 
-/\*\* \* @brief 工具方法，对原始时间点应用时间特效，映射为应用时间特效后的时间点 \* @param time
-未应用时间特效的时间点 \* @return 应用时间特效后的时间点 \*/ -
-(NSTimeInterval)applyEffectToTime:(NSTimeInterval)time;
+/** 
+* @brief 工具方法，对原始时间点应用时间特效，映射为应用时间特效后的时间点 
+* @param time未应用时间特效的时间点 
+* @return 应用时间特效后的时间点 
+*/ 
+-(NSTimeInterval)applyEffectToTime:(NSTimeInterval)time;
 
-/\*\* \* @brief 工具方法，将已应用时间特效的时间点映射到去掉时间特效的时间点 \* @param time
-已应用时间特效的时间点 \* @return 去掉时间特效后的时间点 \*/ -
-(NSTimeInterval)removeEffectFromTime:(NSTimeInterval)time;
+/** 
+* @brief 工具方法，将已应用时间特效的时间点映射到去掉时间特效的时间点 
+* @param time已应用时间特效的时间点 
+* @return 去掉时间特效后的时间点 
+*/ 
+-(NSTimeInterval)removeEffectFromTime:(NSTimeInterval)time;
 
-/\*\* \* @brief 工具方法，对原始时间区间应用时间特效，映射为应用时间特效后的时间区间 \* @param timeRange
-未应用时间特效的时间区间 \* @return 应用时间特效后的时间区间 \*/ -
-(MovieousTimeRange)applyEffectToTimeRange:(MovieousTimeRange)timeRange;
+/** 
+* @brief 工具方法，对原始时间区间应用时间特效，映射为应用时间特效后的时间区间 
+* @param timeRange未应用时间特效的时间区间 
+* @return 应用时间特效后的时间区间 
+*/ 
+-(MovieousTimeRange)applyEffectToTimeRange:(MovieousTimeRange)timeRange;
 
-/\*\* \* @brief 工具方法，将已应用时间特效的时间区间映射到去掉时间特效的时间区间 \* @param timeRange
-已应用时间特效的时间区间 \* @return 去掉时间特效后的时间区间 \*/ -
-(MovieousTimeRange)removeEffectFromTimeRange:(MovieousTimeRange)timeRange;
+/** 
+* @brief 工具方法，将已应用时间特效的时间区间映射到去掉时间特效的时间区间 
+* @param timeRange已应用时间特效的时间区间 
+* @return 去掉时间特效后的时间区间 
+*/ 
+-(MovieousTimeRange)removeEffectFromTimeRange:(MovieousTimeRange)timeRange;
 
-@end \`\`\`
+@end 
 
-\#\# 主轨片段 \`\`\`objectivec /** \* @brief 主轨片段的类型 \*/ typedef
-NS\_ENUM(NSInteger, MSVMainTrackClipType) { /**
+```
 
-``` 
+## 主轨片段
+ ```
+ /** 
+ * @brief 主轨片段的类型 
+ */ 
+ typedefNS\_ENUM(NSInteger, MSVMainTrackClipType) { 
+ /**
    * 音视频媒体资源类型
    */
+   
   MSVMainTrackClipTypeAV,
   /**
    * 图片资源类型
    */
+   
   MSVMainTrackClipTypeImage
-```
-
 };
 
-/\*\* \* @brief 主轨片段 \*/ @interface MSVMainTrackClip : NSObject
-\<NSCopying\>
+/** 
+* @brief 主轨片段 
+*/ 
+@interface MSVMainTrackClip : NSObject<NSCopying\>
 
-/\*\* \* @brief 用户自定义 ID 字段，业务使用用于区分对象 \*/ @property (nonatomic, strong)
-NSString \*ID;
+/** 
+* @brief 用户自定义 ID 字段，业务使用用于区分对象 
+*/ 
+@property (nonatomic, strong)NSString *ID;
 
-/\*\* \* @brief 主轨媒体的类型 \*/ @property (nonatomic, assign, readonly)
-MSVMainTrackClipType type;
+/** 
+* @brief 主轨媒体的类型 
+*@property (nonatomic, assign, readonly)MSVMainTrackClipType type;
 
-/\*\* \* @brief 媒体文件的地址 \*/ @property (nonatomic, strong, readonly)
-NSURL \*URL;
+/** 
+* @brief 媒体文件的地址 
+* @property (nonatomic, strong, readonly)
+NSURL *URL;
 
-/\*\* \* @brief 上片段结束，本片段开始衔接的转场时间 \* @warning
-需要注意的是每个片段的首尾转场效果时长总和不能超过该片段的有效时长，例如存在转场
-A：1-\>2，时长为2秒，转场 B：2-\>3，时长为3秒，则片段2的时长应当大于5秒，否则将会出现错误 \*/ @property
-(nonatomic, assign) NSTimeInterval transitionDuration;
+/** 
+* @brief 上片段结束，本片段开始衔接的转场时间 
+* @warning需要注意的是每个片段的首尾转场效果时长总和不能超过该片段的有效时长，例如存在转场
+A：1->2，时长为2秒，转场 B：2->3，时长为3秒，则片段2的时长应当大于5秒，否则将会出现错误 
+*/ @property(nonatomic, assign) NSTimeInterval transitionDuration;
 
-/\*\* \* @brief 上片段结束，本片段开始衔接的转场效果的类型，默认为 MSVVideoTransitionTypeDissolve
-\*/ @property (nonatomic, assign) MSVVideoTransitionType
+/** 
+* @brief 上片段结束，本片段开始衔接的转场效果的类型，默认为 MSVVideoTransitionTypeDissolve
+*/ 
+@property (nonatomic, assign) MSVVideoTransitionType
 videoTransitionType;
 
-// 以下参数仅对 MSVMainTrackClipTypeAV 类型的主轨片段生效 \#pragma mark - video
-properties /\*\* \* @brief 音视频媒体文件生成的 AVAsset 对象，可以在这里获取一些需要的参数 \*/
-@property (nonatomic, strong, readonly) AVAsset \*asset;
+// 以下参数仅对 MSVMainTrackClipTypeAV 类型的主轨片段生效 #pragma mark - video
+properties 
+/** 
+* @brief 音视频媒体文件生成的 AVAsset 对象，可以在这里获取一些需要的参数 
+*/
 
-/\*\* \* @brief 在媒体片段当中截取使用的时间范围 \* @warning
-这个时间范围是指没有经过快慢速处理及倒放处理之前的时间范围，另外，如果
-timeRange.startTime + timeRange.duration \> 媒体总时长将忽略超出的部分 \*/ @property
-(nonatomic, assign) MovieousTimeRange timeRange;
+@property (nonatomic, strong, readonly) AVAsset *asset;
 
-/\*\* \* @brief 音频片段的速度 \* 一般来说可以进行如下配置： \* 极快：2.0 \* 快：1.5 \* 正常：1.0 \*
-慢：0.75 \* 极慢：0.5 \*/ @property (nonatomic, assign) float speed;
+/** 
 
-/\*\* \* @brief 媒体音频的音量，默认为媒体文件中自带的 preferredVolume \*/ @property
-(nonatomic, assign) float volume;
+* @brief 在媒体片段当中截取使用的时间范围 
+* @warning
+这个时间范围是指没有经过快慢速处理及倒放处理之前的时间范围，另外，如果timeRange.startTime + timeRange.duration > 媒体总时长将忽略超出的部分 
+* @property(nonatomic, assign) MovieousTimeRange timeRange;
 
-\- (void)setReverse:(BOOL)reverse progressHandler:(void(^)(float
+/** 
+* @brief 音频片段的速度 
+* 一般来说可以进行如下配置： 
+* 极快：2.0 
+* 快：1.5 
+* 正常：1.0 
+* 慢：0.75 
+* 极慢：0.5 
+*/ 
+@property (nonatomic, assign) float speed;
+
+/** 
+* @brief 媒体音频的音量，默认为媒体文件中自带的 preferredVolume 
+*/ 
+@property(nonatomic, assign) float volume;
+
+- (void)setReverse:(BOOL)reverse progressHandler:(void(^)(float
 progress))progressHandler completionHandler:(void(^)(NSError
-\*error))completionHandler;
+*error))completionHandler;
 
-\- (void)cancelReverse;
+- (void)cancelReverse;
 
-/\*\* \* @brief 是否倒放该段视频 \*/ @property (nonatomic, assign, readonly)
-BOOL reverse;
+/** 
+* @brief 是否倒放该段视频 
+*/
+ @property (nonatomic, assign, readonly)BOOL reverse;
 
-// 以下参数仅对 MSVMainTrackClipTypeAV 类型的主轨片段生效 \#pragma mark - image
-properties /\*\* \* @brief 图片对象 \*/ @property (nonatomic, assign,
-readonly) UIImage \*image;
+// 以下参数仅对 MSVMainTrackClipTypeAV 类型的主轨片段生效 #pragma mark - imageproperties 
+/** 
+* @brief 图片对象 
+*/ 
+@property (nonatomic, assign,readonly) UIImage *image;
 
-/\*\* \* @brief 主轨片段在主轨当中的时长，此参数和 speed 互相影响，具体的运算关系为 speed =
-timeRange.duration / durationAtMainTrack \*/ @property (nonatomic,
+/** 
+* @brief 主轨片段在主轨当中的时长，此参数和 speed 互相影响，具体的运算关系为 speed =timeRange.duration / durationAtMainTrack */ @property (nonatomic,
 assign) NSTimeInterval durationAtMainTrack;
 
-/\*\* \* @brief 创建一个主轨片段 \* @param type 主轨片段的类型 \* @param URL
-主轨片段的文件路径，只支持本地文件 \* @param outError
-如果发生错误，返回发生的错误 \* @return 创建成功返回创建完成的对象，失败返回
-nil \*/ + (instancetype)mainTrackClipWithType:(MSVMainTrackClipType)type
-URL:(NSURL \*)URL error:(NSError \*\*)outError;
+/** 
+* @brief 创建一个主轨片段 
+* @param type 主轨片段的类型 
+* @param URL主轨片段的文件路径，只支持本地文件 
+* @param outError如果发生错误，返回发生的错误 
+* @return 创建成功返回创建完成的对象，失败返回
+nil */ + (instancetype)mainTrackClipWithType:(MSVMainTrackClipType)type
+URL:(NSURL *)URL error:(NSError **)outError;
 
-/\*\* \* @brief 使用 AVAsset 创建一个音视频类型的主轨片段 \* @param asset 用于创建主轨片段的
-AVAsset 对象 \* @param outError 如果发生错误，返回发生的错误 \* @return
-创建成功返回创建完成的对象，失败返回 nil \*/ +
-(instancetype)mainTrackClipWithAsset:(AVAsset \*)asset error:(NSError
-\*\*)outError;
+/** 
+* @brief 使用 AVAsset 创建一个音视频类型的主轨片段 
+* @param asset 用于创建主轨片段的AVAsset 对象 
+* @param outError 如果发生错误，返回发生的错误 
+* @return创建成功返回创建完成的对象，失败返回 nil 
+*/ 
++(instancetype)mainTrackClipWithAsset:(AVAsset *)asset error:(NSError
+**)outError;
 
-/\*\* \* @brief 使用 UIImage 创建一个图片类型的主轨片段 \* @param image 用于创建主轨片段的
-UIImage 对象 \* @param outError 如果发生错误，返回发生的错误 \* @return
-创建成功返回创建完成的对象，失败返回 nil \*/ +
-(instancetype)mainTrackClipWithImage:(UIImage \*)image
-duration:(NSTimeInterval)duration error:(NSError \*\*)outError;
+/** 
+* @brief 使用 UIImage 创建一个图片类型的主轨片段 
+* @param image 用于创建主轨片段的UIImage 对象 
+* @param outError 如果发生错误，返回发生的错误 
+* @return创建成功返回创建完成的对象，失败返回 nil 
+*/ 
++(instancetype)mainTrackClipWithImage:(UIImage *)image
+duration:(NSTimeInterval)duration error:(NSError **)outError;
 
-/\*\* \* @brief 初始化一个主轨片段 \* @param type 主轨片段的类型 \* @param URL
-主轨片段的文件路径，只支持本地文件 \* @param outError 如果发生错误，返回发生的错误
-\* @return 初始化成功返回初始化完成的对象，失败返回 nil \*/ -
-(instancetype)initWithType:(MSVMainTrackClipType)type URL:(NSURL \*)URL
-error:(NSError \*\*)outError;
+/** 
+* @brief 初始化一个主轨片段 
+* @param type 主轨片段的类型 
+* @param URL主轨片段的文件路径，只支持本地文件 
+* @param outError 如果发生错误，返回发生的错误
+* @return 初始化成功返回初始化完成的对象，失败返回 nil 
+*/ 
+-(instancetype)initWithType:(MSVMainTrackClipType)type URL:(NSURL *)URL
+error:(NSError **)outError;
 
-/\*\* \* @brief 使用 AVAsset 初始化一个音视频类型的主轨片段 \* @param asset 用于创建主轨片段的
-AVAsset 对象 \* @param outError 如果发生错误，返回发生的错误 \* @return
-初始化成功返回创建完成的对象，失败返回 nil \*/ -
-(instancetype)initWithAsset:(AVAsset \*)asset error:(NSError
-\*\*)outError;
+/** 
+* @brief 使用 AVAsset 初始化一个音视频类型的主轨片段 
+* @param asset 用于创建主轨片段的AVAsset 对象 
+* @param outError 如果发生错误，返回发生的错误 
+* @return初始化成功返回创建完成的对象，失败返回 nil 
+*/ 
+-(instancetype)initWithAsset:(AVAsset *)asset error:(NSError
+**)outError;
 
-/\*\* \* @brief 使用 UIImage 初始化一个图片类型的主轨片段 \* @param image 用于创建主轨片段的
-UIImage 对象 \* @param duration 图片时长 \* @param outError 如果发生错误，返回发生的错误 \*
-@return 初始化成功返回创建完成的对象，失败返回 nil \*/ -
-(instancetype)initWithImage:(UIImage \*)image
-duration:(NSTimeInterval)duration error:(NSError \*\*)outError;
+/** 
+* @brief 使用 UIImage 初始化一个图片类型的主轨片段 
+* @param image 用于创建主轨片段的UIImage 对象 
+* @param duration 图片时长 
+* @param outError 如果发生错误，返回发生的错误 
+* @return 初始化成功返回创建完成的对象，失败返回 nil 
+*/ 
+-(instancetype)initWithImage:(UIImage *)image
+duration:(NSTimeInterval)duration error:(NSError **)outError;
 
-/\*\* \* @brief 验证改主轨片段是否有效 \* @param outError 如果发生错误，返回发生的错误 \* @return
-有效返回 YES，无效返回 NO \*/ - (BOOL)validateWithError:(NSError \*\*)outError;
+/** 
+* @brief 验证改主轨片段是否有效 
+* @param outError 如果发生错误，返回发生的错误 
+* @return有效返回 YES，无效返回 NO 
+*/ 
+- (BOOL)validateWithError:(NSError **)outError;
 
-@end \`\`\`
+@end 
 
-\#\# 音效片段 \`\`\`objectivec /\*\* \* @brief 音频片段 \*/ @interface
-MSVAudioClip\<MSVClip\> : NSObject
 
-/\*\* \* @brief 用户自定义 ID 字段，业务使用用于区分对象 \*/ @property (nonatomic, strong)
-NSString \*ID;
+ ```
 
-/\*\* \* @brief 音频片段的 URL，只支持本地文件 \*/ @property (nonatomic, strong,
-readonly) NSURL \*URL;
+## 音效片段
+```
+/** 
+* @brief 音频片段 
+*/
+ @interfaceMSVAudioClip\<MSVClip\> : NSObject
 
-/\*\* \* @brief 底层使用的 AVAsset 对象，可以获取 duration 等媒体参数 \*/ @property
-(nonatomic, strong, readonly) AVAsset \*asset;
+/** 
+* @brief 用户自定义 ID 字段，业务使用用于区分对象 
+/* 
+@property (nonatomic, strong)NSString *ID;
 
-/\*\* \* @brief 音频片段在主轨中开始的时间，音频片段在主轨中实际的时长为 timeRange.duration / speed
-\*/ @property (nonatomic, assign) NSTimeInterval startTimeAtMainTrack;
+/** 
+* @brief 音频片段的 URL，只支持本地文件 
+/*
+ @property (nonatomic, strong,readonly) NSURL *URL;
 
-/\*\* \* @brief
-在音频片段当中截取使用的时间范围，这个时间范围是指没有经过快慢速处理之前的时间范围，请注意，timeRange.startTime
-+ timeRange.duration \<= 媒体总时长 \*/ @property (nonatomic, assign)
-MovieousTimeRange timeRange;
+/** 
+* @brief 底层使用的 AVAsset 对象，可以获取 duration 等媒体参数 
+*/ 
+@property(nonatomic, strong, readonly) AVAsset \*asset;
 
-/\*\* \* @brief 音频片段的速度，此参数和 timeRangeAtMainTrack.duration 互相影响，具体的运算关系为
-speed = timeRange.duration / timeRangeAtMainTrack.duration \*
-一般来说可以进行如下配置： \* 极快：2.0 \* 快：1.5 \* 正常：1.0 \*
-慢：0.75 \* 极慢：0.5 \*/ @property (nonatomic, assign) float speed;
+/** 
+* @brief 音频片段在主轨中开始的时间，音频片段在主轨中实际的时长为 timeRange.duration / speed
+*/ 
+@property (nonatomic, assign) NSTimeIntervalstartTimeAtMainTrack;
 
-/\*\* \* @brief 音频片段的音量，默认为媒体自带的 \*/ @property (nonatomic, assign) float
-volume;
+/** 
+* @brief在音频片段当中截取使用的时间范围，这个时间范围是指没有经过快慢速处理之前的时间范围，请注意，timeRange.startTime
++ timeRange.duration \<= 媒体总时长 
+*/ 
+@property (nonatomic, assign)MovieousTimeRange timeRange;
 
-/\*\* \* @brief 使用媒体地址来创建音频片段 \* @param URL 音频片段的地址，只支持本地文件 \* @param
-outError 如果发生错误，返回发生的错误 \* @return 创建成功返回初始化后的对象，否则返回 nil \*/ +
-(instancetype)audioClipWithURL:(NSURL \*)URL error:(NSError
-\*\*)outError;
+/** 
+* @brief 音频片段的速度，此参数和timeRangeAtMainTrack.duration 互相影响，具体的运算关系为
+speed = timeRange.duration /timeRangeAtMainTrack.duration 
+* 一般来说可以进行如下配置： 
+* 极快：2.0 
+* 快：1.5 
+* 正常：1.0 
+* 慢：0.75 
+* 极慢：0.5 
+*/ 
+@property (nonatomic, assign) float speed;
 
-/\*\* \* @brief 使用媒体地址来初始化音频片段 \* @param URL 音频片段的地址，只支持本地文件 \* @param
-outError 如果发生错误，返回发生的错误 \* @return 初始化成功返回初始化后的对象，否则返回 nil \*/ -
-(instancetype)initWithURL:(NSURL \*)URL error:(NSError \*\*)outError
-NS\_DESIGNATED\_INITIALIZER;
+/** 
+* @brief 音频片段的音量，默认为媒体自带的 
+*/ 
+@property (nonatomic, assign) floatvolume;
 
-/\*\* \* @brief 验证草稿是否有效 \* @param outError 如果发生错误，返回发生的错误 \* @return
-有效返回 YES，无效返回 NO \*/ - (BOOL)validateWithError:(NSError
-\*\*)outError;
+/** 
+* @brief 使用媒体地址来创建音频片段 
+* @param URL 音频片段的地址，只支持本地文件 
+* @paramoutError 如果发生错误，返回发生的错误 
+* @return 创建成功返回初始化后的对象，否则返回 nil 
+*/ 
++(instancetype)audioClipWithURL:(NSURL *)URL error:(NSError
+**)outError;
 
-@end \`\`\`
+/** 
+* @brief 使用媒体地址来初始化音频片段 
+* @param URL 音频片段的地址，只支持本地文件 
+* @paramoutError 如果发生错误，返回发生的错误 
+* @return 初始化成功返回初始化后的对象，否则返回 nil 
+*/ 
+-(instancetype)initWithURL:(NSURL *)URL error:(NSError **)outError
+NS_DESIGNATED_INITIALIZER;
 
-\#\# 速度特效 \`\`\`objectivec /\*\* \* @brief 速度特效 \*/ @interface
-MSVSpeedEffect : NSObject
+/** 
+* @brief 验证草稿是否有效 
+* @param outError 如果发生错误，返回发生的错误 
+* @return有效返回 YES，无效返回 NO 
+*/ 
+- (BOOL)validateWithError:(NSError**)outError;
 
-/\*\* \* @brief 用户自定义 ID 字段，业务使用用于区分对象 \*/ @property (nonatomic, strong)
-NSString \*ID;
+@end 
 
-/\*\* \* @brief 在主轨当中需要应用速度效果的时间区间，这个时间区间是指未应用速度效果前的时间区间 \* @warning
-需要注意的是如果插入多个跟时间有关的特效时（MSVRepeatEffect 及
-MSVSpeedEffect），后插入的时间特效中 timeRangeAtMainTrack
-应当以之前所有特效应用之后的时间轴为标准 \*/ @property (nonatomic, assign)
-MovieousTimeRange timeRangeAtMainTrack;
+```
 
-/\*\* \* @brief 速度，添加速度特效后在相应特效时间区间内的实际速度将变为区间内各 MSVMainTrackClip 对象的
-speed 乘以特效 speed \*/ @property (nonatomic, assign) float speed;
+## 速度特效
+ ```
+  /** 
+  * @brief 速度特效 
+  */ 
+  @interfaceMSVSpeedEffect : NSObject
 
-@end \`\`\`
+/** 
+* @brief 用户自定义 ID 字段，业务使用用于区分对象 
+*/ 
+@property (nonatomic, strong)NSString *ID;
 
-\#\# 反复特效 \`\`\`objectivec /\*\* \* @brief 反复特效 \*/ @interface
-MSVRepeatEffect : NSObject
+/** 
+* @brief 在主轨当中需要应用速度效果的时间区间，这个时间区间是指未应用速度效果前的时间区间 
+* @warning需要注意的是如果插入多个跟时间有关的特效时（MSVRepeatEffect 及MSVSpeedEffect），后插入的时间特效中 timeRangeAtMainTrack应当以之前所有特效应用之后的时间轴为标准 
+*/ 
+@property (nonatomic, assign)MovieousTimeRange timeRangeAtMainTrack;
 
-/\*\* \* @brief 用户自定义 ID 字段，业务使用用于区分对象 \*/ @property (nonatomic, strong)
-NSString \*ID;
+/** 
+* @brief 速度，添加速度特效后在相应特效时间区间内的实际速度将变为区间内各 MSVMainTrackClip 对象的speed 乘以特效 speed 
+*/ 
+@property (nonatomic, assign) float speed;
 
-/\*\* \* @brief 在主轨当中应用反复效果的时间区间 \* @warning
-需要注意的是如果插入多个跟时间有关的特效时（MSVRepeatEffect
-及 MSVSpeedEffect），后插入的时间特效中 timeRangeAtMainTrack 应当以之前所有特效应用之后的时间轴为标准
-\*/ @property (nonatomic, assign) MovieousTimeRange
-timeRangeAtMainTrack;
+@end 
 
-/\*\* \* @brief 反复次数 \*/ @property (nonatomic, assign) NSUInteger count;
 
-@end \`\`\`
+ ```
 
-\#\# 图片贴纸特效 \`\`\`objectivec /\*\* \* @brief 图片贴纸效果 \*/ @interface
-MSVImagePasterEffect : NSObject
+## 反复特效 
+```
+ /** 
+ * @brief 反复特效 
+ */ 
+ @interfaceMSVRepeatEffect : NSObject
 
-/\*\* \* @brief 用户自定义 ID 字段，业务使用用于区分对象 \*/ @property (nonatomic, strong)
-NSString \*ID;
+/**
+ * @brief 用户自定义 ID 字段，业务使用用于区分对象 
+ */ 
+ @property (nonatomic, strong)NSString *ID;
 
-/\*\* \* @brief 图片贴纸所使用的图片 \*/ @property (nonatomic, strong, readonly)
-UIImage \*image;
+/** 
+* @brief 在主轨当中应用反复效果的时间区间 
+* @warning需要注意的是如果插入多个跟时间有关的特效时（MSVRepeatEffect及 MSVSpeedEffect），后插入的时间特效中 timeRangeAtMainTrack 应当以之前所有特效应用之后的时间轴为标准
+*/ 
+@property (nonatomic, assign) MovieousTimeRangetimeRangeAtMainTrack;
 
-/\*\* \* @brief 贴纸的目标位置和大小 \* @warning 长宽比例和贴纸本身的长宽比不一致时贴纸会发生变形 \*/
+/** 
+* @brief 反复次数 
+*/ 
+@property (nonatomic, assign) NSUInteger count;
+
+@end 
+
+```
+
+## 图片贴纸特效 
+```
+ /** 
+ * @brief 图片贴纸效果 
+ */ 
+ @interfaceMSVImagePasterEffect : NSObject
+
+/** 
+* @brief 用户自定义 ID 字段，业务使用用于区分对象 
+*/ 
+@property (nonatomic, strong)NSString *ID;
+
+/** 
+* @brief 图片贴纸所使用的图片 
+*/ 
+@property (nonatomic, strong, readonly)UIImage *image;
+
+/** 
+* @brief 贴纸的目标位置和大小 
+* @warning 长宽比例和贴纸本身的长宽比不一致时贴纸会发生变形 
+*/
 @property (nonatomic, assign) CGRect destRect;
 
-/\*\* \* @brief 在主轨当中应用外部滤镜的时间区间 \*/ @property (nonatomic, assign)
-MovieousTimeRange timeRangeAtMainTrack;
+/** 
+* @brief 在主轨当中应用外部滤镜的时间区间 
+*/ 
+@property (nonatomic, assign)MovieousTimeRange timeRangeAtMainTrack;
 
-\- (instancetype)initWithImage:(UIImage \*)image;
+- (instancetype)initWithImage:(UIImage *)image;
 
-\+ (instancetype)pasterEffectWithImage:(UIImage \*)image;
++ (instancetype)pasterEffectWithImage:(UIImage *)image;
 
-@end \`\`\`
+@end 
 
-\#\# 颜色查找表滤镜特效 \`\`\`objectivec /\*\* \* @brief 颜色查找表滤镜特效 \*/ @interface
-MSVLUTFilterEffect : NSObject
+```
 
-/\*\* \* @brief 用户自定义 ID 字段，业务使用用于区分对象 \*/ @property (nonatomic, strong)
-NSString \*ID;
+## 颜色查找表滤镜特效 
+``` 
+/** 
+* @brief 颜色查找表滤镜特效 
+*/ 
+@interfaceMSVLUTFilterEffect : NSObject
 
-/\*\* \* @brief LUT(look up table) 滤镜的图片文件地址，只支持本地文件 \*/ @property
-(nonatomic, strong, readonly) NSURL \*URL;
+/** 
+* @brief 用户自定义 ID 字段，业务使用用于区分对象 
+*/ 
+@property (nonatomic, strong)NSString *ID;
 
-/\*\* \* @brief 在主轨当中应用颜色查找表滤镜特效的时间区间 \*/ @property (nonatomic, assign)
-MovieousTimeRange timeRangeAtMainTrack;
+/** 
+* @brief LUT(look up table) 滤镜的图片文件地址，只支持本地文件 
+*/ 
+@property(nonatomic, strong, readonly) NSURL *URL;
 
-@end \`\`\`
+/** 
+* @brief 在主轨当中应用颜色查找表滤镜特效的时间区间 
+*/ 
+@property (nonatomic, assign)MovieousTimeRange timeRangeAtMainTrack;
 
-\#\# 外部滤镜特效 \`\`\`objectivec /\*\* \* @brief 外部滤镜效果协议，所有外部滤镜都需要遵守此协议 \*/
-@protocol MSVExternalFilter \<NSObject\>
+@end 
 
-@required /\*\* \* @brief 生成一个共享的外部滤镜对象 \* @return 生成的外部滤镜对象 \*/ +
-(instancetype)sharedInstance; @optional
+```
 
-/\*\* \* @brief 处理视频数据 \* @param pixelBuffer 待处理的视频数据 \* @param
-sampleTimingInfo 待处理视频数据的时间戳 \* @return
-处理完成的视频数据，可以直接返回待处理的视频数据，即不进行任何处理
-\*/ - (CVPixelBufferRef)processPixelBuffer:(CVPixelBufferRef)pixelBuffer
+## 外部滤镜特效 
+``` 
+/** 
+* @brief 外部滤镜效果协议，所有外部滤镜都需要遵守此协议 
+*/
+@protocol MSVExternalFilter <NSObject>@required 
+
+/** 
+* @brief 生成一个共享的外部滤镜对象 
+* @return 生成的外部滤镜对象 
+*/ 
++(instancetype)sharedInstance; @optional
+
+/** 
+* @brief 处理视频数据 * @param pixelBuffer 待处理的视频数据 * @paramsampleTimingInfo 待处理视频数据的时间戳 
+* @return处理完成的视频数据，可以直接返回待处理的视频数据，即不进行任何处理
+*/ 
+- (CVPixelBufferRef)processPixelBuffer:(CVPixelBufferRef)pixelBuffer
 sampleTimingInfo:(CMSampleTimingInfo)sampleTimingInfo;
 
 @end @interface MSVExternalFilterEffect : NSObject
 
-/\*\* \* @brief 用户自定义 ID 字段，业务使用用于区分对象 \*/ @property (nonatomic, strong)
-NSString \*ID;
+/** 
+* @brief 用户自定义 ID 字段，业务使用用于区分对象 
+*/
+ @property (nonatomic, strong)NSString *ID;
 
-/\*\* \* @brief 外部滤镜的 class \*/ @property (nonatomic, assign)
-Class\<MSVExternalFilter\> externalFilterClass;
+/** 
+* @brief 外部滤镜的 class 
+*/ 
+@property (nonatomic, assign)Class<MSVExternalFilter> externalFilterClass;
 
-/\*\* \* @brief 在主轨当中应用外部滤镜的时间区间 \*/ @property (nonatomic, assign)
-MovieousTimeRange timeRangeAtMainTrack;
+/** 
+* @brief 在主轨当中应用外部滤镜的时间区间 
+*/ 
+@property (nonatomic, assign)MovieousTimeRange timeRangeAtMainTrack;
 
-@end \`\`\`
+@end 
 
-\#\# 录制器 \`\`\`objectivec @class MSVRecorder;
 
-/\*\* \* @brief 录制器代理接口 \*/ @protocol MSVRecorderDelegate \<NSObject\>
+```
 
-@optional /\*\* \* @brief 当用户点击预览界面对焦时回调 \* @param recorder 产生事件的录制器对象
-\* @param point 用户点击的位置 \*/ - (void)recorder:(MSVRecorder \*)recorder
-didFocusAtPoint:(CGPoint)point;
+## 录制器 
+```
+@class MSVRecorder;
 
-/\*\* \* @brief 录制器到达配置的最大时长 \* @param recorder 产生事件的录制器对象 \*/ -
-(void)recorderDidReachMaxDuration:(MSVRecorder \*)recorder;
+/**
+ * @brief 录制器代理接口 
+*/ 
+@protocol MSVRecorderDelegate <NSObject>@optional
+ 
+/** 
+ * @brief 当用户点击预览界面对焦时回调 
+ * @param recorder 产生事件的录制器对象
+ * @param point 用户点击的位置 
+*/
+ 
+- (void)recorder:(MSVRecorder*)recorderdidFocusAtPoint:(CGPoint)point;
 
-/\*\* \* @brief 录制器播放背景音乐时发生错误 \* @param recorder 产生事件的录制器对象 \* @param
-error 产生的具体错误 \*/ - (void)recorder:(MSVRecorder \*)recorder
-didPlayBackgroundAudioError:(NSError \*)error;
+/** 
+* @brief 录制器到达配置的最大时长 
+* @param recorder 产生事件的录制器对象 
+*/ 
 
-/\*\* \* @brief 当前录制片段的时长发生更新的回调，调用者可以在此回调当中更新 UI 反馈录制进度 \* @param
-recorder 产生事件的录制器对象 \* @param currentClipDuration 当前片段的时长 \*/ -
-(void)recorder:(MSVRecorder \*)recorder
+-(void)recorderDidReachMaxDuration:(MSVRecorder *)recorder;
+
+/** 
+* @brief 录制器播放背景音乐时发生错误 
+* @param recorder 产生事件的录制器对象 *
+* @paramerror 产生的具体错误 
+*/ 
+- (void)recorder:(MSVRecorder *)recorderdidPlayBackgroundAudioError:(NSError *)error;
+
+/** 
+* @brief 当前录制片段的时长发生更新的回调，调用者可以在此回调当中更新 UI 反馈录制进度 
+* @paramrecorder 产生事件的录制器对象 
+* @param currentClipDuration 当前片段的时长 
+*/ 
+-(void)recorder:(MSVRecorder *)recorder
 currentClipDurationDidUpdated:(NSTimeInterval)currentClipDuration;
 
-/\*\* \* @brief
+/** 
+* @brief
 摄像头获取到视频数据的回调，调用者可以实现该方法来对视频数据进行自定义处理，处理后的数据将会反馈在预览图像并编码到生成的片段当中
-\* @param recorder 产生事件的录制器对象 \* @param pixelBuffer 待处理的视频数据 \* @return
-处理完成的视频数据 \*/ - (CVPixelBufferRef)recorder:(MSVRecorder \*)recorder
+* @param recorder 产生事件的录制器对象 
+* @param pixelBuffer 待处理的视频数据 
+* @return处理完成的视频数据 */ - (CVPixelBufferRef)recorder:(MSVRecorder *)recorder
 didGetPixelBuffer:(CVPixelBufferRef)pixelBuffer;
 
 @end
 
-/\*\* \* @brief 录制器 \*/ @interface MSVRecorder : NSObject
+/** 
+* @brief 录制器 
+*/ 
+@interface MSVRecorder : NSObject
 
-/\*\* \* @brief Recorder 自动生成的草稿对象，可以通过此属性获取草稿对象用于编辑或导出 \*/ @property
-(nonatomic, strong, readonly) MSVDraft \*draft;
+/** 
+* @brief Recorder 自动生成的草稿对象，可以通过此属性获取草稿对象用于编辑或导出 
+*/ 
 
-/\*\* \* @brief 视频参数配置对象 \* @warning 请不要修改获取到的 videoConfiguration
-对象，否则会出现未定义的错误，更新参数请使用相关运行时属性更新接口或销毁当前 Recorder 重新生成 \*/
+@property(nonatomic, strong, readonly) MSVDraft *draft;
+
+/** 
+* @brief 视频参数配置对象 
+* @warning 请不要修改获取到的 videoConfiguration
+对象，否则会出现未定义的错误，更新参数请使用相关运行时属性更新接口或销毁当前 Recorder 重新生成 
+*/
+
 @property (nonatomic, strong, readonly) MSVRecorderVideoConfiguration
-\*videoConfiguration;
+*videoConfiguration;
 
 /\*\* \* @brief 音频参数配置对象 \* @warning 请不要修改获取到的 videoConfiguration
 对象，否则会出现未定义的错误，更新参数请使用相关运行时属性更新接口或销毁当前 Recorder 重新生成 \*/
