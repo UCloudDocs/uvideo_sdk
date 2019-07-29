@@ -688,73 +688,115 @@ didGetPixelBuffer:(CVPixelBufferRef)pixelBuffer;
 @property (nonatomic, strong, readonly) MSVRecorderVideoConfiguration
 *videoConfiguration;
 
-/\*\* \* @brief 音频参数配置对象 \* @warning 请不要修改获取到的 videoConfiguration
-对象，否则会出现未定义的错误，更新参数请使用相关运行时属性更新接口或销毁当前 Recorder 重新生成 \*/
-@property (nonatomic, strong, readonly) MSVRecorderAudioConfiguration
-\*audioConfiguration;
+/** 
+* @brief 音频参数配置对象 
+* @warning 请不要修改获取到的 videoConfiguration
+对象，否则会出现未定义的错误，更新参数请使用相关运行时属性更新接口或销毁当前 Recorder 重新生成 
+*/
 
-/\*\* \* @brief 当前片段已经录制的时间长度 \*/ @property (nonatomic, assign,
-readonly) NSTimeInterval currentClipDuration;
+@property (nonatomic, strong, readonly)MSVRecorderAudioConfiguration*audioConfiguration;
 
-/\*\* \* @brief 所有已经保存的片段的时间长度 \*/ @property (nonatomic, assign,
-readonly) NSTimeInterval recordedClipsDuration;
+/** 
+* @brief 当前片段已经录制的时间长度 
+*/ 
+@property (nonatomic, assign,readonly) NSTimeInterval currentClipDuration;
 
-/\*\* \* @brief 最大的录制长度，这里的录制长度指的是所有片段长度的总和，当录制长度到达最大值时，delegate 的
-\`recorderDidReachMaxDuration\` 方法将被调用，如果该值小于或等于 0 则表示没有最大长度限制 \*/
+/** 
+* @brief 所有已经保存的片段的时间长度 
+*/
+@property (nonatomic, assign,readonly) NSTimeInterval recordedClipsDuration;
+
+/** 
+* @brief 最大的录制长度，这里的录制长度指的是所有片段长度的总和，当录制长度到达最大值时，delegate 的`recorderDidReachMaxDuration` 方法将被调用，如果该值小于或等于 0 则表示没有最大长度限制 
+*/
 @property (nonatomic, assign) NSTimeInterval maxDuration;
 
-/\*\* \* @brief 预览视图 \*/ @property (nonatomic, strong, readonly) UIView
-\*preview;
+/** 
+* @brief 预览视图 
+*/
 
-/\*\* \* @brief 代理对象，用于接收事件回调 \*/ @property (nonatomic, weak)
-id\<MSVRecorderDelegate\> delegate;
+@property (nonatomic, strong, readonly) UIView*preview;
+ 
+/**
+ 
+* @brief 代理方法回调使用的队列，如果未指定将在主线程回调 
+*/ 
+@property (nonatomic,strong) dispatch_queue_t delegateQueue;
 
-/\*\* \* @brief 代理方法回调使用的队列，如果未指定将在主线程回调 \*/ @property (nonatomic,
-strong) dispatch\_queue\_t delegateQueue;
+/** 
+* @brief 当预览视窗与配置的 videoSize 比例不一致时使用的填充模式，默认为MovieousScalingModeAspectFit 
+*/ 
+@property (nonatomic, assign)MovieousScalingMode previewScalingMode;
 
-/\*\* \* @brief 当预览视窗与配置的 videoSize 比例不一致时使用的填充模式，默认为
-MovieousScalingModeAspectFit \*/ @property (nonatomic, assign)
-MovieousScalingMode previewScalingMode;
+/** 
+* @brief 当前是否处于正在录制的状态 
+*/ 
+@property (nonatomic, assign) BOOLrecording;
 
-/\*\* \* @brief 当前是否处于正在录制的状态 \*/ @property (nonatomic, assign) BOOL
-recording;
+/** 
+* @brief 是否对前置摄像头预览进行镜像处理，默认为 YES 
+*/ 
+@property (nonatomic,assign) BOOL mirrorFrontPreview;
 
-/\*\* \* @brief 是否对前置摄像头预览进行镜像处理，默认为 YES \*/ @property (nonatomic,
-assign) BOOL mirrorFrontPreview;
+/** 
+* @brief 是否对后置摄像头预览进行镜像处理，默认为 NO 
+*/
+@property (nonatomic,assign) BOOL mirrorBackPreview;
 
-/\*\* \* @brief 是否对后置摄像头预览进行镜像处理，默认为 NO \*/ @property (nonatomic,
-assign) BOOL mirrorBackPreview;
+/** 
+* @brief 是否对前置摄像头编码的视频进行镜像处理，默认为 NO 
+*/ 
+@property (nonatomic,assign) BOOL mirrorFrontEncoded;
 
-/\*\* \* @brief 是否对前置摄像头编码的视频进行镜像处理，默认为 NO \*/ @property (nonatomic,
-assign) BOOL mirrorFrontEncoded;
+/** 
+* @brief 是否对后置摄像头编码的视频进行镜像处理，默认为 NO 
+*/ 
+@property (nonatomic,assign) BOOL mirrorBackEncoded;
 
-/\*\* \* @brief 是否对后置摄像头编码的视频进行镜像处理，默认为 NO \*/ @property (nonatomic,
-assign) BOOL mirrorBackEncoded;
+/** 
+* @brief 是否开启内部的聚焦视图，默认为 NO 
+*/ 
+@property (nonatomic, assign)BOOL innerFocusView;
 
-/\*\* \* @brief 是否开启内部的聚焦视图，默认为 NO \*/ @property (nonatomic, assign)
-BOOL innerFocusView;
+/** 
+* @brief 获取截图 
+*/ 
 
-/\*\* \* @brief 获取截图 \*/ @property (nonatomic, strong, readonly) UIImage
-\*snapshot;
+@property (nonatomic, strong, readonly) UIImage*snapshot;
 
-/\*\* \* @brief
-录制进入后台时自动采取的操作，如果不自动进行操作那调用方需要自行进行适当的处理（完成或取消当前片段的录制），默认为
-MSVBackgroundActionContinue \*/ @property (nonatomic, assign)
-MSVBackgroundAction backgroundAction;
+/** 
+* @brief录制进入后台时自动采取的操作，如果不自动进行操作那调用方需要自行进行适当的处理（完成或取消当前片段的录制），默认为
+MSVBackgroundActionContinue 
+*/ 
+@property (nonatomic, assign)MSVBackgroundAction backgroundAction;
 
-/\*\* \* @brief 是否开启了手电筒，默认为 NO \*/ @property (nonatomic, assign,
-readonly) BOOL torchOn;
+/** 
+* @brief 是否开启了手电筒，默认为 NO 
+*/ 
+@property (nonatomic, assign,readonly) BOOL torchOn;
 
-/\*\* \* @brief 开关手电筒接口 \* @param torchOn 开启或关闭 \* @param outError
-如果发生错误，返回发生的错误 \* @return 设置成功返回 YES，否则返回 NO \*/ -
-(BOOL)setTorchOn:(BOOL)torchOn error:(NSError \*\*)outError;
+/** 
+* @brief 开关手电筒接口 
+* @param torchOn 开启或关闭 
+* @param outError如果发生错误，返回发生的错误 
+* @return 设置成功返回 YES，否则返回 NO 
+*/
+ 
+-(BOOL)setTorchOn:(BOOL)torchOn error:(NSError **)outError;
 
-/\*\* \* @brief 采集视频的帧率 \*/ @property (nonatomic, assign, readonly)
-NSUInteger frameRate;
+/** 
+* @brief 采集视频的帧率 
+*/ 
+@property (nonatomic, assign, readonly)NSUInteger frameRate;
 
-/\*\* \* @brief 设置采集视频的帧率 \* @param frameRate 新的帧率 \* @param outError
-如果发生错误，返回发生的错误 \* @return 设置成功返回 YES，否则返回 NO \*/ -
-(BOOL)setFrameRate:(NSUInteger)frameRate error:(NSError \*\*)outError;
+/** 
+* @brief 设置采集视频的帧率 
+* @param frameRate 新的帧率 
+* @param outError如果发生错误，返回发生的错误 
+* @return 设置成功返回 YES，否则返回 NO 
+*/ 
+
+-(BOOL)setFrameRate:(NSUInteger)frameRate error:(NSError **)outError;
 
 /\*\* \* @brief 相机采集的分辨率，默认为 AVCaptureSessionPresetHigh \*/ @property
 (nonatomic, strong, readonly) AVCaptureSessionPreset cameraResolution;
