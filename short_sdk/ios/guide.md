@@ -1293,10 +1293,7 @@ finished))completionHandler;
 ```
 
 ## 导出器 
-
 ```
-@interface MSVVideoExporter : NSObject
-
 /** 
 * @brief 草稿对象 
 */ 
@@ -1396,3 +1393,5 @@ error:(NSError * _Nullable * _Nullable)outError;
 NS_ASSUME_NONNULL_END
 
 @end 
+
+```
