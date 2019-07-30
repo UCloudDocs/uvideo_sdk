@@ -1,415 +1,724 @@
+#使用指南
 {{indexmenu_n>3}}
 
-\#\# 核心类
+## 核心类
 
-短视频核心类有 2 个，分别是 \`UVideoRecord\` 、 \`UVideoEdit\`，分别完成音视频的录制和后期编辑处理工作。
+短视频核心类有 2 个，分别是 `UVideoRecord` 、`UVideoEdit`，分别完成音视频的录制和后期编辑处理工作。
 
-\#\#\# UShortVideoEnv
+### UShortVideoEnv
 
-\`UShortVideoEnv\` 包含了 SDK 初始化的接口，必须在 APP 启动时调用，方法列表如下：
+`UShortVideoEnv` 包含了 SDK 初始化的接口，必须在 APP 启动时调用，方法列表如下：
 
-\`\`\`java /\*\* \* Initialize the environment of SDK. \* \<p\> \* You
-must invoke it when application launch, otherwise, {@link
-IllegalStateException} \* will be thrown when invoke the {@link
-UVideoRecord} or {@link UVideoEdit} \* \* @param context the context of
-the Application \* @param sign the Movieous sign \*/ public static void
-init(Context context, String sign)
+```
+/** 
+* Initialize the environment of SDK. 
+* Youmust invoke it when application launch, otherwise, {@link IllegalStateException} will be thrown when invoke the {@linkUVideoRecord} or {@link UVideoEdit} 
+* @param context the context of the Application 
+* @param sign the Movieous sign 
+*/ 
+public static voidinit(Context context, String sign)
 
-/\*\* \* Set log level. \* \* @param level the level，See also {@link
-com.movieous.base.Log\#V}/{@link Log\#D}/{@link Log\#I}/{@link
-Log\#W}/{@link Log\#E} \*/ public static void setLogLevel(int level)
-\`\`\`
+/** 
+* Set log level. 
+* @param level the level，See also {@link
+com.movieous.base.Log#V}/{@link Log#D}/{@link Log#I}/{@link
+Log#W}/{@link Log#E} 
+*/ 
+public static void setLogLevel(int level)
+```
 
-\#\#\#\# UVideoRecord
+#### UVideoRecord
 
-\`UVideoRecord\` 包含了录制短视频需要的接口，方法列表如下：
+`UVideoRecord` 包含了录制短视频需要的接口，方法列表如下：
 
-\`\`\`java /\*\* \* init the recorder \* \* @param preview the
-GLSurfaceView \* @param cameraParam the camera param \* @param
-microphoneParam the microphone param \* @param videoEncodeParam the
-video encode param \* @param audioEncodeParam the audio encode param \*
-@param beautyParam the face beauty param \* @param recordParam the
-record param \*/ public void init(GLSurfaceView preview,
+```
+/** 
+* init the recorder
+*/
 
-``` 
+/**
+* @param preview theGLSurfaceView 
+* @param cameraParam the camera param 
+* @parammicrophoneParam the microphone param 
+* @param videoEncodeParam the video encode param 
+* @param audioEncodeParam the audio encode param 
+* @param beautyParam the face beauty param 
+* @param recordParam the record param 
+*/ 
+public void init(GLSurfaceView preview,
                UCameraParam cameraParam,
                UMicrophoneParam microphoneParam,
                UVideoEncodeParam videoEncodeParam,
                UAudioEncodeParam audioEncodeParam,
                UBeautyParam beautyParam,
                URecordParam recordParam)
-```
 
-/\*\* \* Resume. \*/ public void resume()
+/** 
+* Resume. 
+*/ 
+public void resume()
 
-/\*\* \* Pause. \*/ public void pause()
+/** 
+* Pause. 
+*/ 
+public void pause()
 
-/\*\* \* Destroy. \*/ public void destroy()
+/** 
+* Destroy. 
+*/ 
+public void destroy()
 
-/\*\* \* Set filter file path \* \* @param filterPath filter file path
-\* @param isAssetFile whether asset file or sdcard file \*/ public void
-setFilterFile(String filterPath, boolean isAssetFile)
+/** 
+* Set filter file path
 
-/\*\* \* Set watermark. \* \* @param watermarkParam the watermark param
-\*/ public void setWatermark(UWatermarkParam watermarkParam)
+* @param filterPath filter file path
+* @param isAssetFile whether asset file or sdcard file */ 
+* public voidsetFilterFile(String filterPath, boolean isAssetFile)
 
-/\*\* \* Start record clip. \*/ public boolean start()
+/** 
+* Set watermark. 
 
-/\*\* \* Stop record clip. \*/ public boolean stop()
+* @param watermarkParam the watermark param
+*/ 
+public void setWatermark(UWatermarkParam watermarkParam)
 
-/\*\* \* Remove last clip. \*/ public boolean removeLastClip()
+/** 
+* Start record clip. 
+*/ 
+public boolean start()
 
-/\*\* \* Remove all of the clips. \*/ public boolean removeAllClips()
+/** 
+* Stop record clip. 
+*/ 
+public boolean stop()
 
-/\*\* \* Merge clips. \* \* @param listener the listener \*/ public void
-mergeClips(USaveFileListener listener)
+/** 
+* Remove last clip. 
+*/ 
+public boolean removeLastClip()
 
-/\*\* \* cancel previous clips merging \*/ public void cancelMerge()
+/** 
+* Remove all of the clips. 
+*/ 
+public boolean removeAllClips()
 
-/\*\* \* set music file in sd card \* \* @param filePath the music file
-path \*/ public void setMusicFile(String filePath)
+/** 
+* Merge clips. 
 
-/\*\* \* set music position \* \* @param position the position \*/
+* @param listener the listener 
+*/ 
+public void mergeClips(USaveFileListener listener)
+
+/** 
+* cancel previous clips merging 
+*/ 
+public void cancelMerge()
+
+/** 
+* set music file in sd card 
+
+* @param filePath the music file path 
+*/ public void setMusicFile(String filePath)
+
+/** 
+* set music position 
+
+* @param position the position 
+*/
 public void setMusicStartPosition(int position)
 
-/\*\* \* Sets camera preview listener. \* \* @param listener the
-listener \*/ public final void
-setCameraPreviewListener(UCameraPreviewListener listener)
+/** 
+* Sets camera preview listener. 
 
-/\*\* \* Sets video frame listener. \* \* @param listener the listener
-\*/ public final void setVideoFrameListener(UVideoFrameListener
+* @param listener the listener 
+*/ 
+public final void setCameraPreviewListener(UCameraPreviewListener listener)
+
+/** 
+* Sets video frame listener. 
+
+* @param listener the listener
+*/ 
+public final void setVideoFrameListener(UVideoFrameListener
 listener)
 
-/\*\* \* set video speed of the recording, only support multiple of 2 or
-multiple of 1/2 for now. \* \* @param recordSpeed 4, 2, 0.5, 0.25 etc
-\*/ public void setVideoSpeed(double recordSpeed)
+/** 
+* set video speed of the recording, only support multiple of 2 or multiple of 1/2 for now. 
 
-/\*\* \* Sets audio frame listener. \* \* @param listener the listener
-\*/ public final void setAudioFrameListener(UAudioFrameListener
+* @param recordSpeed 4, 2, 0.5, 0.25 etc
+*/ 
+public void setVideoSpeed(double recordSpeed)
+
+/** 
+* Sets audio frame listener. 
+
+* @param listener the listener
+*/ 
+public final void setAudioFrameListener(UAudioFrameListener
 listener)
 
-/\*\* \* Sets record state listener. \* \* @param listener the listener
-\*/ public final void setRecordStateListener(URecordStateListener
+/** 
+* Sets record state listener. 
+
+* @param listener the listener
+*/ 
+public final void setRecordStateListener(URecordStateListener
 listener)
 
-/\*\* \* Mute microphone \*/ public void mute(boolean isMute)
+/** 
+* Mute microphone 
+*/ 
+public void mute(boolean isMute)
 
-/\*\* \* Switch camera. \*/ public void switchCamera()
+/** 
+* Switch camera. 
+*/ 
+public void switchCamera()
 
-/\*\* \* specify the focus area size on previous set preview with the
-corresponding central x and y coordinate. \* \* @param focusAreaWidth
-area width \* @param focusAreaHeight area height \* @param
-focusAreaCenterX area center x \* @param focusAreaCenterY area center y
-\*/ public void manualCameraFocus(int focusAreaWidth, int
+/**
+* specify the focus area size on previous set preview with the corresponding central x and y coordinate. 
+
+* @param focusAreaWidth area width 
+* @param focusAreaHeight area height 
+* @param focusAreaCenterX area center x
+* @param focusAreaCenterY area center y
+*/ 
+public void manualCameraFocus(int focusAreaWidth, int
 focusAreaHeight, int focusAreaCenterX, int focusAreaCenterY)
 
-/\*\* \* capture the present preview frame \* \* @param listener \*/
+/** 
+* capture the present preview frame 
+
+* @param listener 
+*/
 public void captureVideoFrame(UCaptureVideoFrameListener listener)
 
-/\*\* \* set exposure compensation to adjust brightness \* \* @param
-value to be set value \*/ public void setExposureCompensation(int value)
+/** 
+* set exposure compensation to adjust brightness 
 
-/\*\* \* set zoom ratio of camera, must be called {@link
-\#getCameraZoomRatios()} first \* \* @param zoom the value in ![@link
-\#getCameraZoomRatios()](@link%20#getCameraZoomRatios\(\)) \*/ public
-void setCameraZoomRatio(float zoom)
+* @param value to be set value 
+*/ 
+public void setExposureCompensation(int value)
 
-/\*\* \* get available zoom ratio values, sorted from small to large \*
-\* @return null if zoom not supported \*/ public List\<Float\>
-getCameraZoomRatios()
+/** 
+* set zoom ratio of camera, must be called {@link
+#getCameraZoomRatios()} first 
 
-/\*\* \* set the listener for focus related events \* \* @param
-focusListener the listener \*/ public void
-setCameraFocusListener(UCameraFocusListener focusListener)
+* @param zoom the value in ![@link
+#getCameraZoomRatios()](@link%20#getCameraZoomRatios()) 
+*/ 
+public void setCameraZoomRatio(float zoom)
 
-/\*\* \* Update builtin face beauty param. \* \* @param beautyParam the
-face beauty param \*/ public void updateBeautyParam(UBeautyParam
+/** 
+* get available zoom ratio values, sorted from small to large 
+
+* @return null if zoom not supported 
+*/
+public List<Float> getCameraZoomRatios()
+
+/** 
+* set the listener for focus related events 
+
+* @param focusListener the listener 
+*/ 
+public void setCameraFocusListener(UCameraFocusListener focusListener)
+
+/** 
+* Update builtin face beauty param. 
+
+* @param beautyParam the face beauty param 
+*/ 
+public void updateBeautyParam(UBeautyParam
 beautyParam)
 
-/\*\* \* Turn flashlight on or off. Set the flashlight to
-FLASH\_MODE\_TORCH mode. \* \<p\> \* The following situations will cause
-the failed invocation: \* \<ol\> \* \<li\> Camera is unactivated \*
-\<li\> The handset don't support flashlight \* \<li\> The handset don't
-support FLASH\_MODE\_TORCH mode \* \</ol\> \* \* @return true if operate
-successfully, otherwise, false. \*/ public boolean
+/** 
+* Turn flashlight on or off. Set the flashlight to
+FLASH\_MODE\_TORCH mode. 
+
+* The following situations will cause
+the failed invocation: 
+
+* Camera is unactivated 
+* The handset don't support flashlight 
+* The handset don't support FLASH_MODE_TORCH mode 
+
+
+* @return true if operate
+successfully, otherwise, false. 
+*/ 
+public boolean
 setCameraFlashEnabled(boolean enabled)
 
-\`\`\`
+```
 
-\#\#\# UVideoEdit
+### UVideoEdit
 
-\`UVideoEdit\` 包含了编辑短视频需要的接口，方法列表如下：
+`UVideoEdit` 包含了编辑短视频需要的接口，方法列表如下：
 
-\`\`\`java /\*\* \* Constructor of UVideoEdit \* \* @param preview Play
-preview screen \* @param param Video editing parameters \*/ public
-UVideoEdit(GLSurfaceView preview, UVideoEditParam param)
+```
+/** 
+* Constructor of UVideoEdit 
 
-/\*\* \* Sets video frame listener. \*/ public final void
-setVideoFrameListener(UVideoFrameListener listener)
+* @param preview Play preview screen 
+* @param param Video editing parameters 
+*/ 
+public UVideoEdit(GLSurfaceView preview, UVideoEditParam param)
 
-/\*\* \* Start playback \*/ public void startPlay()
+/** 
+* Sets video frame listener. 
+*/ 
+public final void setVideoFrameListener(UVideoFrameListener listener)
 
-/\*\* \* Resume play \*/ public void resumePlay()
+/** 
+* Start playback 
+*/ 
+public void startPlay()
 
-/\*\* \* Pause play \*/ public void pausePlay()
+/** 
+* Resume play 
+*/ public void resumePlay()
 
-/\*\* \* Stop play \*/ public void stopPlay()
+/** 
+* Pause play 
+*/ 
+public void pausePlay()
 
-/\*\* \* Setting encoding parameters \* \* @param param video encode
-parameters \*/ public void setVideoEncodeParam(UVideoEncodeParam param)
+/** 
+* Stop play 
+*/ 
+public void stopPlay()
 
-/\*\* \* whether or not looping play \*/ public void setPlayLoop(boolean
-loop)
+/** 
+* Setting encoding parameters 
 
-/\*\* \* set display mode of preview \*/ public void
-setDisplayMode(UDisplayMode displayMode)
+* @param param video encode parameters 
+*/ 
+public void setVideoEncodeParam(UVideoEncodeParam param)
 
-/\*\* \* set speed of the video, only support multiple of 2 or multiple
-of 1/2 for now. \* \* @param speed 4, 2, 0.5, 0.25 etc \*/ public void
-setVideoSpeed(double speed)
+/**
+* whether or not looping play 
+*/ 
+public void setPlayLoop(boolean loop)
 
-/\*\* \* seek to target position \*/ public void seekTo(int millisecond)
+/** 
+* set display mode of preview 
+*/ 
+public void setDisplayMode(UDisplayMode displayMode)
 
-/\*\* \* get current video position \* \* @return millisecond \*/ public
-int getCurrentPosition()
+/** 
+* set speed of the video, only support multiple of 2 or multiple of 1/2 for now. 
 
-/\*\* \* set video mix file, blend a video with current one \* \* @param
-mvFile mv file \* @param maskFile mask file for alpha channel \*/ public
-void setVideoMixFile(String mvFile, String maskFile)
+* @param speed 4, 2, 0.5, 0.25 etc 
+*/
+public void setVideoSpeed(double speed)
 
-/\*\* \* Sets video save listener. \*/ public void
-setVideoSaveListener(USaveFileListener listener)
+/** 
+* seek to target position 
+*/ 
+public void seekTo(int millisecond)
 
-/\*\* \* Sets video player listener. \*/ public void
-setVideoPlayListener(UVideoPlayListener listener)
+/** 
+* get current video position 
 
-/\*\* \* Set filter file path \* \* @param filterPath filter file path,
-null to clear filter \* @param isAssetFile whether asset file or sdcard
-file \*/ public void setFilterFile(String filterPath, boolean
+* @return millisecond 
+*/ 
+public int getCurrentPosition()
+
+/** 
+* set video mix file, blend a video with current one 
+
+* @param mvFile mv file 
+* @param maskFile mask file for alpha channel 
+*/ 
+publicvoid setVideoMixFile(String mvFile, String maskFile)
+
+/** 
+* Sets video save listener. 
+*/ 
+public void setVideoSaveListener(USaveFileListener listener)
+
+/** 
+* Sets video player listener. 
+*/ 
+public void setVideoPlayListener(UVideoPlayListener listener)
+
+/** 
+* Set filter file path 
+
+* @param filterPath filter file path,null to clear filter 
+* @param isAssetFile whether asset file or sdcard
+file 
+*/ 
+public void setFilterFile(String filterPath, boolean
 isAssetFile)
 
-/\*\* \* Sets watermark. \* \* @param watermarkParam the watermark param
-\*/ public void setWatermark(UWatermarkParam watermarkParam)
+/** 
+* Sets watermark. 
 
-/\*\* \* set audio mix file \* \* @param file the mix audio file \*/
+* @param watermarkParam the watermark param
+*/ 
+public void setWatermark(UWatermarkParam watermarkParam)
+
+/** 
+* set audio mix file 
+
+* @param file the mix audio file 
+*/
 public void setAudioMixFile(String file)
 
-/\*\* \* set audio mix asset \* \* @param afd the AssetFileDescriptor
-\*/ public void setAudioMixAssetFile(AssetFileDescriptor afd)
+/** 
+* set audio mix asset 
 
-/\*\* \* get audio mix file duration \* \* @return duration: ms \*/
+* @param afd the AssetFileDescriptor
+*/ 
+public void setAudioMixAssetFile(AssetFileDescriptor afd)
+
+/** 
+* get audio mix file duration 
+
+* @return duration: ms 
+*/
 public int getAudioMixFileDuration()
 
-/\*\* \* set audio mix start position \* \* @param startTime start
-position, ms \* @param endTime end position \*/ public void
-setAudioMixFileDuration(long startTime, long endTime)
+/** 
+* set audio mix start position 
 
-/\*\* \* Set origin audio volume \* \* @param volume origin audio volume
-\*/ public void setAudioVolume(float volume)
+* @param startTime start position, ms 
+* @param endTime end position 
+*/ 
+public void setAudioMixFileDuration(long startTime, long endTime)
 
-/\*\* \* Set mix audio volume \* \* @param volume mix audio volume \*/
+/** 
+* Set origin audio volume 
+
+* @param volume origin audio volume
+*/ 
+public void setAudioVolume(float volume)
+
+/** 
+* Set mix audio volume 
+
+* @param volume mix audio volume 
+*/
 public void setAudioMixVolume(float volume)
 
-/\*\* \* set whether mix audio looping or not \* \* @param isLooping \*/
+/** 
+* set whether mix audio looping or not 
+
+* @param isLooping 
+*/
 public void setAudioMixLooping(boolean isLooping)
 
-/\*\* \* mute origin audio \*/ public void muteOriginAudio(boolean
-isMute)
+/** 
+* mute origin audio 
+*/ 
+public void muteOriginAudio(boolean isMute)
 
-/\*\* \* Save the edited video file path with video frame callback. \*/
+/** 
+* Save the edited video file path with video frame callback. 
+*/
 public void save(UVideoFrameListener listener)
 
-/\*\* \* cancel previous video saving \*/ public void cancelSave()
+/** 
+* cancel previous video saving 
+*/ 
+public void cancelSave()
 
-/\*\* \* get source video duration in Ms \* \* @return ms \*/ public
-long getMediaFileDurationMs()
+/** 
+* get source video duration in Ms 
 
-/\*\* \* Add the UTextView to the preview screen. \*/ public void
-addTextView(UTextView textView)
+* @return ms 
+*/ 
+public long getMediaFileDurationMs()
 
-/\*\* \* Remove the UTextView from it's parent. \*/ public void
-removeTextView(UTextView textView)
+/** 
+* Add the UTextView to the preview screen. 
+*/ 
+public void addTextView(UTextView textView)
 
-/\*\* \* Add the UPaintView to the preview screen. \*/ public void
-addPaintView(UPaintView paintView)
+/** 
+* Remove the UTextView from it's parent. 
+*/ 
+public void removeTextView(UTextView textView)
 
-/\*\* \* Remove the UPaintView from it's parent. \*/ public void
-removePaintView(UPaintView paintView)
+/** 
+* Add the UPaintView to the preview screen. 
+*/ 
+public void addPaintView(UPaintView paintView)
 
-/\*\* \* Add the UImageView to the preview screen. \*/ public void
-addImageView(UImageView imageView)
+/** 
+* Remove the UPaintView from it's parent. 
+*/ 
+public void removePaintView(UPaintView paintView)
 
-/\*\* \* Remove the UImageView from it's parent. \*/ public void
-removeImageView(UImageView imageView)
+/** 
+* Add the UImageView to the preview screen. 
+*/ 
+public void addImageView(UImageView imageView)
 
-/\*\* \* Set the view's display duration time, the view must be added.
-\* \* @param view the added view, can be UImageView, UTextView and
-UPaintView \* @param beginMs time of the view begin to display \* @param
-durationMs duration of the view display \*/ public void
-setViewDuration(View view, long beginMs, long durationMs)
+/** 
+* Remove the UImageView from it's parent. 
+*/ 
+public void removeImageView(UImageView imageView)
 
-/\*\* \* Set duration of the save video file. \* \* @param beginMs the
-beginning timestamp \* @param endMs the ending timestamp \*/ public void
-setVideoDuration(long beginMs, long endMs) \`\`\`
+/** 
+* Set the view's display duration time, the view must be added.
 
-\#\# 参数类
+* @param view the added view, can be UImageView, UTextView and
+UPaintView 
+* @param beginMs time of the view begin to display 
+* @param durationMs duration of the view display 
+*/ 
+public void setViewDuration(View view, long beginMs, long durationMs)
 
-\#\#\# UCameraParam
+/** 
+* Set duration of the save video file. 
 
-\`UCameraParam\` 类用于配置摄像头采集的相关参数，包含以下方法：
+* @param beginMs the beginning timestamp 
+* @param endMs the ending timestamp 
+*/ 
+public void setVideoDuration(long beginMs, long endMs) 
+```
 
-\`\`\`java /\*\* \* Set camera id. \* default: CAMERA\_FACING\_ID.BACK
-\*/ public UCameraParam setCameraId(CAMERA\_FACING\_ID cameraId)
+## 参数类
 
-/\*\* \* Set camera preview size ratio. \* default:
-CAMERA\_PREVIEW\_SIZE\_RATIO.RATIO\_16\_9; \*/ public UCameraParam
-setCameraPreviewSizeRatio(CAMERA\_PREVIEW\_SIZE\_RATIO ratio)
+### UCameraParam
 
-/\*\* \* Set camera preview size level. \* default:
-CAMERA\_PREVIEW\_SIZE\_LEVEL.SIZE\_480P \*/ public UCameraParam
-setCameraPreviewSizeLevel(CAMERA\_PREVIEW\_SIZE\_LEVEL level) \`\`\`
+`UCameraParam` 类用于配置摄像头采集的相关参数，包含以下方法：
 
-\#\#\# UMicrophoneParam
+```
+/** 
+* Set camera id. 
+* default: CAMERA_FACING_ID.BACK
+*/ 
+public UCameraParam setCameraId(CAMERA_FACING_ID cameraId)
 
-\`UMicrophoneParam\` 类用于配置麦克风采集的相关参数，包含以下方法：
+/** 
+* Set camera preview size ratio. 
+* default:CAMERA_PREVIEW_SIZE_RATIO.RATIO_16_9; 
+*/ 
+public UCameraParam setCameraPreviewSizeRatio(CAMERA_PREVIEW_SIZE_RATIO ratio)
 
-\`\`\`java /\*\* \* Set audio source. see {@link
-android.media.MediaRecorder.AudioSource} \* default:
-MediaRecorder.AudioSource.MIC \*/ public UMicrophoneParam
-setAudioSource(int source)
+/** 
+* Set camera preview size level. 
+* default:CAMERA_PREVIEW_SIZE_LEVEL.SIZE_480P 
+*/ 
+public UCameraParam setCameraPreviewSizeLevel(CAMERA_PREVIEW_SIZE_LEVEL level) 
+```
 
-/\*\* \* Set sample rate. \* default: 44100 \*/ public UMicrophoneParam
-setSampleRate(int sampleRate)
+### UMicrophoneParam
 
-/\*\* \* Set channel config. see {@link android.media.AudioFormat} \*
-default: AudioFormat.CHANNEL\_IN\_MONO \*/ public UMicrophoneParam
-setChannelConfig(int channelConfig)
+`UMicrophoneParam` 类用于配置麦克风采集的相关参数，包含以下方法：
 
-/\*\* \* Set audio format. see {@link android.media.AudioFormat} \*
-default: AudioFormat.ENCODING\_PCM\_16BIT \*/ public UMicrophoneParam
-setAudioFormat(int audioFormat)
+```
+/** 
+* Set audio source. see {@link android.media.MediaRecorder.AudioSource} 
+* default:MediaRecorder.AudioSource.MIC 
+*/ 
+public UMicrophoneParam setAudioSource(int source)
 
-/\*\*
+/** 
+* Set sample rate. 
+* default: 44100 
+*/ 
+public UMicrophoneParam setSampleRate(int sampleRate)
+
+/** 
+* Set channel config. see {@link android.media.AudioFormat} 
+* default: AudioFormat.CHANNEL_IN_MONO 
+*/ 
+public UMicrophoneParam setChannelConfig(int channelConfig)
+
+/** 
+* Set audio format. see {@link android.media.AudioFormat} 
+* default: AudioFormat.ENCODING_PCM_16BIT 
+*/ 
+public UMicrophoneParam setAudioFormat(int audioFormat)
+
+/**
 
   - Set bluetooth sco enabled.
-
-
-
-    *
     * @param enabled whether enabled or not
     * @return the bluetooth sco enabled
 
-\*/ public UMicrophoneParam setBluetoothScoEnabled(boolean enabled)
+*/ 
+public UMicrophoneParam setBluetoothScoEnabled(boolean enabled)
 
-/\*\* \* Set noise suppressor enabled. \* \* @param enabled whether
-enabled or not \* @return whether noise suppressor setting successful or
-not \*/ public boolean setNsEnabled(boolean enabled)
+/** 
+* Set noise suppressor enabled. 
 
-/\*\* \* Set acoustic echo canceler enabled. \* \* @param enabled
-whether enabled or not \* @return whether is acoustic echo canceler
-setting successful or not \*/ public boolean setAecEnabled(boolean
-enabled) \`\`\`
+* @param enabled whether enabled or not 
+* @return whether noise suppressor setting successful or not 
+*/ 
+public boolean setNsEnabled(boolean enabled)
 
-\#\#\# UVideoEncodeParam
+/** 
+* Set acoustic echo canceler enabled. 
 
-\`UVideoEncodeParam\` 类用于配置视频编码的相关参数，包含以下方法：
+* @param enabled whether enabled or not 
+* @return whether is acoustic echo canceler setting successful or not 
+*/ 
+public boolean setAecEnabled(boolean enabled)
+```
 
-\`\`\`java /\*\* \* Set preferred custom video encoding size \* \*
-@param width encode width \* @param height encode height \*/ public
-UVideoEncodeParam setPreferredEncodingSize(int width, int height)
+### UVideoEncodeParam
 
-/\*\* \* Set preset video encoding size level. \* \* @param level See
-also {@link VIDEO\_ENCODING\_SIZE\_LEVEL} \*/ public UVideoEncodeParam
-setEncodingSizeLevel(VIDEO\_ENCODING\_SIZE\_LEVEL level)
+`UVideoEncodeParam` 类用于配置视频编码的相关参数，包含以下方法：
 
-/\*\* \* Set video encoding fps. \* \* @param fps frame per second \*/
+```
+/** 
+* Set preferred custom video encoding size 
+
+* @param width encode width 
+* @param height encode height 
+*/
+ public UVideoEncodeParam setPreferredEncodingSize(int width, int height)
+
+/** 
+* Set preset video encoding size level. 
+
+* @param level See
+also {@link VIDEO_ENCODING_SIZE_LEVEL} */ public UVideoEncodeParam
+setEncodingSizeLevel(VIDEO_ENCODING_SIZE_LEVEL level)
+
+/** 
+* Set video encoding fps. 
+
+* @param fps frame per second 
+*/
 public UVideoEncodeParam setEncodingFps(int fps)
 
-/\*\* \* Set video bitrate \*/ public UVideoEncodeParam
-setEncodingBitrate(int bitrate)
+/** 
+* Set video bitrate 
+*/ 
+public UVideoEncodeParam setEncodingBitrate(int bitrate)
 
-/\*\* \* Set key frame interval \* \* @param keyFrameIntervalCount key
-frame interval count \*/ public UVideoEncodeParam
-setKeyFrameInterval(int keyFrameIntervalCount) \`\`\`
+/** 
+* Set key frame interval 
 
-\#\#\# UAudioEncodeParam
+* @param keyFrameIntervalCount key
+frame interval count 
+*/ 
+public UVideoEncodeParam setKeyFrameInterval(int keyFrameIntervalCount) 
 
-\`UAudioEncodeParam\` 类用于配置音频编码的相关参数，包含以下方法：
+```
+### UAudioEncodeParam
 
-\`\`\`java /\*\* \* Set audio sample rate. default: 44100 \*/ public
-UAudioEncodeParam setSampleRate(int sampleRate)
+`UAudioEncodeParam` 类用于配置音频编码的相关参数，包含以下方法：
 
-/\*\* \* Set audio channels. default: 1 \* \* @param channelCount audio
-channel count \*/ public UAudioEncodeParam setChannels(int channelCount)
+```
+/** 
+* Set audio sample rate. default: 44100 
+*/ 
+public UAudioEncodeParam setSampleRate(int sampleRate)
 
-/\*\* \* Set audio encoding bitrate. default: 44100 \*/ public
-UAudioEncodeParam setBitrate(int bitrate) \`\`\`
+/** 
+* Set audio channels. default: 1 
 
-\#\#\# URecordParam
+* @param channelCount audio channel count 
+*/ 
+public UAudioEncodeParam setChannels(int channelCount)
 
-\`URecordParam\` 类用于配置录制参数，包含以下方法：
+/** 
+* Set audio encoding bitrate. default: 44100 
+*/
+ public UAudioEncodeParam setBitrate(int bitrate) 
+```
+### URecordParam
 
-\`\`\`java /\*\* \* Set max record duration. default: 10 \* 1000 ms \*
-\* @param durationMs duration ms \*/ public URecordParam
-setMaxRecordDuration(long durationMs)
+`URecordParam` 类用于配置录制参数，包含以下方法：
 
-/\*\* \* Set record clip cache dir. \*/ public URecordParam
-setClipCacheDir(File dir)
+``` 
+/** 
+* Set max record duration. default: 10 
+* 1000 ms 
 
-/\*\* \* Set record clip cache dir. \*/ public URecordParam
-setClipCacheDir(String dir)
+* @param durationMs duration ms 
+*/ 
+public URecordParam setMaxRecordDuration(long durationMs)
 
-/\*\* \* Set record file save path \*/ public URecordParam
-setRecordFilePath(String path)
+/** 
+* Set record clip cache dir. 
+*/ 
+public URecordParam setClipCacheDir(File dir)
 
-/\*\* \* Set display mode. default: {@link UDisplayMode\#FULL} \* \*
-@param displayMode can be set {@link UDisplayMode\#FULL} or {@link
-UDisplayMode\#FIT} \*/ public URecordParam setDisplayMode(UDisplayMode
-displayMode)
+/** 
+* Set record clip cache dir. 
+*/ 
+public URecordParam setClipCacheDir(String dir)
 
-/\*\* \* Set change record speed enabled or not. \*/ public URecordParam
-setChangeRecordSpeedEnabled(boolean enabled) \`\`\`
+/** 
+* Set record file save path 
+*/ 
+public URecordParam setRecordFilePath(String path)
 
-\#\#\# UVideoEditParam
+/** 
+* Set display mode. default: {@link UDisplayMode#FULL} 
 
-\`UVideoEditParam\` 类用于配置视频编辑参数，包含以下方法：
+*@param displayMode can be set {@link UDisplayMode#FULL} or {@link
+UDisplayMode#FIT} 
+*/ 
+public URecordParam setDisplayMode(UDisplayModedisplayMode)
 
-\`\`\`java /\*\* \* Set source media file path. \*/ public
-UVideoEditParam setMediaFilepath(String filepath)
+/**
+* Set change record speed enabled or not. 
+*/ 
+public URecordParam setChangeRecordSpeedEnabled(boolean enabled)
+```
+### UVideoEditParam
 
-/\*\* \* Set save file path. \*/ public UVideoEditParam
-setSaveFilepath(String destFilePath)
+`UVideoEditParam` 类用于配置视频编辑参数，包含以下方法：
 
-/\*\* \* Whether keep origin file or not. default: true \*/ public
-UVideoEditParam setKeepOriginFileEnabled(boolean isKeepEnabled) \`\`\`
+```
+/** 
+* Set source media file path. 
+*/ 
+public UVideoEditParam setMediaFilepath(String filepath)
 
-\#\#\# UBeautyParam
+/** 
+* Set save file path. 
+*/ 
+public UVideoEditParam setSaveFilepath(String destFilePath)
 
-\`UBeautyParam\` 类用于配置内置美颜参数，包含以下方法：
+/** 
+* Whether keep origin file or not. default: true 
+*/ 
+public UVideoEditParam setKeepOriginFileEnabled(boolean isKeepEnabled) 
+```
 
-\`\`\`java /\*\* \* Whether builtin face beauty enabled or not. default:
-false \*/ public void setEnable(boolean enable)
+### UBeautyParam
 
-/\*\* \* Set face beauty level. default: 0.8f \* \* @param beautyLevel
-the beauty level, range: 0.0f \~ 1.0f \*/ public void
-setBeautyLevel(float beautyLevel) \`\`\`
+`UBeautyParam` 类用于配置内置美颜参数，包含以下方法：
 
-\#\# 回调类
+```
+/** 
+* Whether builtin face beauty enabled or not. default:
+false 
+*/ 
+public void setEnable(boolean enable)
 
-\#\#\# UVideoFrameListener
+/** 
+* Set face beauty level. default: 0.8f 
+
+* @param beautyLevel the beauty level, range: 0.0f ~ 1.0f 
+*/ 
+public void setBeautyLevel(float beautyLevel)
+```
+
+## 回调类
+
+### UVideoFrameListener
 
 该接口用于回调相机/编辑预览视频相关的事件和数据，方法如下：
 
-\`\`\`java public interface UVideoFrameListener {
+```
+public interface UVideoFrameListener {
 
-``` 
   /**
    * To be called in {@link android.opengl.GLSurfaceView.Renderer#onSurfaceCreated(GL10, EGLConfig)} invoked.
    */
   void onSurfaceCreated();
-```
 
-``` 
   /**
    * To be called in {@link android.opengl.GLSurfaceView.Renderer#onSurfaceChanged(GL10, int, int)}.
    *
@@ -417,16 +726,12 @@ setBeautyLevel(float beautyLevel) \`\`\`
    * @param height the height of the surface
    */
   void onSurfaceChanged(int width, int height);
-```
-
-``` 
+ 
   /**
    * To be called after surface destroyed
    */
   void onSurfaceDestroy();
-```
 
-``` 
   /**
    * To be called in {@link android.opengl.GLSurfaceView.Renderer#onDrawFrame(GL10)}.
    *
@@ -438,24 +743,22 @@ setBeautyLevel(float beautyLevel) \`\`\`
    * @return the texture ID of the newly generated texture to be assigned to the SurfaceTexture object.
    */
   int onDrawFrame(int texId, int texWidth, int texHeight, long timestampNs, float[] transformMatrix);
+
+} 
 ```
 
-} \`\`\`
-
-\#\#\# UAudioFrameListener
+### UAudioFrameListener
 
 该接口用于回调录制/编辑音频相关的事件和数据，方法如下：
 
-\`\`\`java public interface UAudioFrameListener {
+```
+ public interface UAudioFrameListener {
 
-``` 
   /**
    * To be called when audio frame recording failed
    */
   void onAudioRecordFailed(int errorCode);
-```
 
-``` 
   /**
    * To be called when audio frame available
    *
@@ -463,87 +766,73 @@ setBeautyLevel(float beautyLevel) \`\`\`
    * @param timestampNs the timestamp of the frame in Ns
    */
   void onAudioFrameAvailable(byte[] data, long timestampNs);
+
+} 
 ```
 
-} \`\`\`
-
-\#\#\# USaveFileListener
+### USaveFileListener
 
 该接口用于回调保存录制/编辑文件相关的事件，方法如下：
 
-\`\`\`java public interface USaveFileListener {
-
-``` 
+```
+public interface USaveFileListener {
+ 
   /**
    * To be called when save video success.
    *
    * @param destFile the edited file
    */
   void onSaveFileSuccess(String destFile, UVideoEncodeParam videoEncodeParam);
-```
 
-``` 
   /**
    * To be called when save video failed.
    *
    * @param errorCode the error code
    */
   void onSaveFileFailed(int errorCode);
-```
-
-``` 
+ 
   /**
    * To be called when save video canceled
    */
   void onSaveFileCanceled();
-```
 
-``` 
   /**
    * To be called when save video progress update
    *
    * @param percentage
    */
   void onSaveFileProgress(float percentage);
+
+} 
 ```
 
-} \`\`\`
-
-\#\#\# URecordStateListener
+### URecordStateListener
 
 该接口用于回调录制过程中相关的事件，方法如下：
 
-\`\`\`java public interface URecordStateListener {
-
-``` 
+```
+public interface URecordStateListener {
+ 
   /**
    * To be called when record ready.
    */
   void onReady();
-```
 
-``` 
   /**
    * To be called when record error.
    */
   void onError(int code);
-```
 
-``` 
   /**
    * To be called when record real start, after encoders started.
    */
   void onRecordStarted();
-```
 
-``` 
   /**
    * To be called when record real stop, after encoders stopped.
    */
   void onRecordStopped();
-```
 
-``` 
   /**
    * To be called when record clip count changed.
    *
@@ -551,87 +840,76 @@ setBeautyLevel(float beautyLevel) \`\`\`
    * @param clipCount       the clip count
    */
   void onClipCountChanged(long totalDurationMs, int clipCount);
-```
 
-``` 
   /**
    * To be called when record finished.
    */
   void onRecordFinish();
+
+} 
 ```
 
-} \`\`\`
-
-\#\#\# UVideoPlayListener
+### UVideoPlayListener
 
 该接口用于回调视频编辑播放相关的事件，方法如下：
 
-\`\`\`java public interface UVideoPlayListener {
+```
+public interface UVideoPlayListener {
 
-``` 
   /**
    * To bo called when play position changed
    *
    * @param position current play position, ms
    */
   void onPositionChanged(int position);
-```
 
-``` 
   /**
    * To be called when the end of a media source is reached during playback.
    */
   void onCompletion();
+
+}
 ```
 
-} \`\`\`
-
-\#\#\# UCameraFocusListener
+### UCameraFocusListener
 
 该接口用于回调 Camera 对焦相关的事件，方法如下：
 
-\`\`\`java public interface UCameraFocusListener {
+```
+ public interface UCameraFocusListener {
 
-``` 
   /**
    * To bo called whether manual focus start success or not.
    */
   void onManualFocusStart(boolean result);
-```
 
-``` 
   /**
    * To bo called whether manual focus stop success or not.
    */
   void onManualFocusStop(boolean result);
-```
 
-``` 
   /**
    * To be called when ongoing manual focus canceled, because another manual focus triggered.
    */
   void onManualFocusCancel();
-```
 
-``` 
   /**
    * To be called when continuous auto focus start, only trigger when selected focus mode as FOCUS_MODE_CONTINUOUS_VIDEO or FOCUS_MODE_CONTINUOUS_PICTURE
    */
   void onAutoFocusStart();
-```
-
-``` 
+ 
   /**
    * To be called when continuous auto focus stop, only trigger when selected focus mode as FOCUS_MODE_CONTINUOUS_VIDEO or FOCUS_MODE_CONTINUOUS_PICTURE
    */
   void onAutoFocusStop();
+
+
+} 
 ```
 
-} \`\`\`
+## 自定义对象
 
-\#\# 自定义对象
-
-\#\#\# UErrorCode
+### UErrorCode
 
 自定义错误码，包含如下内容：
 
