@@ -1,8 +1,9 @@
 #使用指南
 {{indexmenu_n>4}}
-/\*\*
+
 
 ```
+/**
  * @brief 视频草稿，调用者可以自行生成草稿或直接草稿进行任意编辑，然后使用 MSVEditor
 实时生成草稿的预览，也可以使用 MSVExporter 对草稿进行导出 
 
@@ -798,358 +799,599 @@ MSVBackgroundActionContinue
 
 -(BOOL)setFrameRate:(NSUInteger)frameRate error:(NSError **)outError;
 
-/\*\* \* @brief 相机采集的分辨率，默认为 AVCaptureSessionPresetHigh \*/ @property
-(nonatomic, strong, readonly) AVCaptureSessionPreset cameraResolution;
+/** 
+* @brief 相机采集的分辨率，默认为AVCaptureSessionPresetHigh */
+@property(nonatomic, strong, readonly) AVCaptureSessionPreset cameraResolution;
 
-/\*\* \* @brief 设置相机采集的分辨率 \* @param cameraResolution 新的分辨率 \* @param
-outError 如果发生错误，返回发生的错误 \* @return 设置成功返回 YES，否则返回 NO \*/ -
-(BOOL)setCameraResolution:(AVCaptureSessionPreset)cameraResolution
-error:(NSError \*\*)outError;
+/** 
+* @brief 设置相机采集的分辨率 
+* @param cameraResolution 新的分辨率 
+* @paramoutError 如果发生错误，返回发生的错误 
+* @return 设置成功返回 YES，否则返回 NO 
+*/
+ 
+-(BOOL)setCameraResolution(AVCaptureSessionPreset)cameraResolution error:(NSError **)outError;
 
-/\*\* \* @brief 摄像头的位置，默认为 AVCaptureDevicePositionBack \*/ @property
-(nonatomic, assign, readonly) AVCaptureDevicePosition cameraPosition;
+/** 
+* @brief 摄像头的位置，默认为 AVCaptureDevicePositionBack */ 
+@property(nonatomic, assign, readonly)AVCaptureDevicePosition cameraPosition;
 
-/\*\* \* @brief 设置摄像头的位置 \* @param cameraPosition 新的摄像头位置 \* @param
-outError 如果发生错误，返回发生的错误 \* @return 设置成功返回 YES，否则返回 NO \*/ -
-(BOOL)setCameraPosition:(AVCaptureDevicePosition)cameraPosition
-error:(NSError \*\*)outError;
+/** 
+* @brief 设置摄像头的位置 
+* @param cameraPosition 新的摄像头位置 
+* @paramoutError 如果发生错误，返回发生的错误 
+* @return 设置成功返回 YES，否则返回 NO 
+*/ 
 
-/\*\* \* @brief 摄像头的旋转方向，默认为 AVCaptureVideoOrientationPortrait \*/
-@property (nonatomic, assign, readonly) AVCaptureVideoOrientation
-cameraOrientation;
+-(BOOL)setCameraPosition:(AVCaptureDevicePosition)cameraPosition
+error:(NSError **)outError;
 
-/\*\* \* @brief 设置摄像头的旋转方向 \* @param cameraOrientation 新的摄像头旋转方向 \*
-@param outError 如果发生错误，返回发生的错误 \* @return 设置成功返回 YES，否则返回 NO \*/ -
-(BOOL)setCameraOrientation:(AVCaptureVideoOrientation)cameraOrientation
-error:(NSError \*\*)outError;
+/** 
+* @brief 摄像头的旋转方向，默认为 AVCaptureVideoOrientationPortrait 
+*/
+@property (nonatomic, assign, readonly)AVCaptureVideoOrientationcameraOrientation;
 
-/\*\* \* @brief 摄像头变焦系数，默认为 1 \*/ @property (nonatomic, assign,
-readonly) CGFloat cameraZoomFactor;
+/** 
+* @brief 设置摄像头的旋转方向 
+* @param cameraOrientation 新的摄像头旋转方向 
+* @param outError 如果发生错误，返回发生的错误 
+* @return 设置成功返回 YES，否则返回 NO 
+*/ 
 
-/\*\* \* @brief 设置摄像头变焦系数 \* @param cameraZoomFactor 新的摄像头变焦系数 \* @param
-outError 如果发生错误，返回发生的错误 \* @return 设置成功返回 YES，否则返回 NO \*/ -
-(BOOL)setCameraZoomFactor:(CGFloat)cameraZoomFactor error:(NSError
-\*\*)outError;
+-(BOOL)setCameraOrientation:(AVCaptureVideoOrientation)cameraOrientation
+error:(NSError **)outError;
 
-/\*\* \* @brief 对焦和曝光参考点（点的位置以 cameraResolution
+/** 
+* @brief 摄像头变焦系数，默认为 1 
+*/ 
+@property (nonatomic, assign,readonly) CGFloat cameraZoomFactor;
+
+/** 
+* @brief 设置摄像头变焦系数 
+* @param cameraZoomFactor 新的摄像头变焦系数 
+* @paramoutError 如果发生错误，返回发生的错误 
+* @return 设置成功返回 YES，否则返回 NO 
+*/ 
+
+-(BOOL)setCameraZoomFactor:(CGFloat)cameraZoomFactor error:(NSError
+**)outError;
+
+/** 
+* @brief 对焦和曝光参考点（点的位置以 cameraResolution
 指定的采集分辨率为参考系，左上角为原点，朝右和朝下分别为
-x 值和 y 值递增的方向） \*/ @property (nonatomic, assign, readonly) CGPoint
-pointOfInterest;
+x 值和 y 值递增的方向） 
+*/ 
+@property (nonatomic, assign, readonly) CGPointpointOfInterest;
 
-/\*\* \* @brief 设置对焦和曝光的参考点 \* @param pointOfInterest 新的对焦曝光参考点 \*
-@param outError 如果发生错误，返回发生的错误 \* @return 设置成功返回 YES，否则返回 NO \*/ -
-(BOOL)setPointOfInterest:(CGPoint)pointOfInterest error:(NSError
-\*\*)outError;
+/** 
+* @brief 设置对焦和曝光的参考点 
+* @param pointOfInterest 新的对焦曝光参考点 
+* @param outError 如果发生错误，返回发生的错误 
+* @return 设置成功返回 YES，否则返回 NO 
+*/
+ 
+-(BOOL)setPointOfInterest:(CGPoint)pointOfInterest error:(NSError
+**)outError;
 
-/\*\* \* @brief 初始化一个空的录制器 \* @param audioConfiguration 音频配置，传入 nil
-将使用默认配置 \* @param videoConfiguration 视频配置，传入 nil 将使用默认配置 \*
-@param outError 如果发生错误，返回发生的错误 \* @return 初始化成功返回初始化后的对象，否则返回 nil \*/ -
-(instancetype)initWithAudioConfiguration:(MSVRecorderAudioConfiguration
-\*)audioConfiguration videoConfiguration:(MSVRecorderVideoConfiguration
-\*)videoConfiguration error:(NSError \*\*)outError;
+/** 
+* @brief 初始化一个空的录制器 
+* @param audioConfiguration 音频配置，传入 nil
+将使用默认配置 
+* @param videoConfiguration 视频配置，传入 nil 将使用默认配置 
+* @param outError 如果发生错误，返回发生的错误 
+* @return 初始化成功返回初始化后的对象，否则返回 nil 
+*/ 
 
-/\*\* \* @brief
-使用保存的草稿初始化一个录制器，使用此方法创建的录制器后续所有录制的片段和背景音乐都将添加到初始化使用的草稿对象中
-\* @param draft 初始化使用的草稿对象 \* @param audioConfiguration 音频配置，传入 nil
-将使用默认配置 \* @param videoConfiguration 视频配置，传入 nil 将使用默认配置 \*
-@param outError 如果发生错误，返回发生的错误 \* @return 初始化成功返回初始化后的对象，否则返回 nil \*/ -
-(instancetype)initWithDraft:(MSVDraft \*)draft
-AudioConfiguration:(MSVRecorderAudioConfiguration \*)audioConfiguration
-videoConfiguration:(MSVRecorderVideoConfiguration \*)videoConfiguration
-error:(NSError \*\*)outError;
+-(instancetype)initWithAudioConfiguration(MSVRecorderAudioConfiguration*)audioConfiguration videoConfiguration:(MSVRecorderVideoConfiguration*)videoConfiguration error:(NSError **)outError;
 
-/\*\* \* @brief 开始采集音视频，调用此方法将请求音视频的使用权限（如果指定音视频数据源为摄像头或麦克风的话） \* @param
-completionHandler
-调用完成的回调，audioGranted：是否获得音频权限，audioError：音频组件初始化发生的错误，videoGranted：是否获得了视频的采集权限，videoError：视频组件初始化发生的错误
-\*/ - (void)startCapturingWithCompletionHandler:(void(^)(BOOL
-audioGranted, NSError \*audioError, BOOL videoGranted, NSError
-\*videoError))completionHandler;
+/** 
+* @brief使用保存的草稿初始化一个录制器，使用此方法创建的录制器后续所有录制的片段和背景音乐都将添加到初始化使用的草稿对象中
+* @param draft 初始化使用的草稿对象 
+* @param audioConfiguration 音频配置，传入 nil将使用默认配置 
+* @param videoConfiguration 视频配置，传入 nil 将使用默认配置 
+* @param outError 如果发生错误，返回发生的错误 
+* @return 初始化成功返回初始化后的对象，否则返回 nil 
+*/ 
 
-/\*\* \* @brief 开始采集音视频，调用此方法将请求音视频的使用权限（如果指定音视频数据源为摄像头或麦克风的话） \* @param
-compromise 是否允许妥协部分不受当前设备支持的参数以保证尽最大努力使组件初始化成功 \* @param
-completionHandler
-调用完成的回调，audioGranted：是否获得音频权限，audioError：音频组件初始化发生的错误，videoGranted：是否获得了视频的采集权限，videoError：视频组件初始化发生的错误
-\*/ - (void)startCapturingWithCompromise:(BOOL)compromise
-completionHandler:(void(^)(BOOL audioGranted, NSError \*audioError, BOOL
-videoGranted, NSError \*videoError))completionHandler;
+-(instancetype)initWithDraft:(MSVDraft *)draft
+AudioConfiguration:(MSVRecorderAudioConfiguration *)audioConfigurationvideoConfiguration：(MSVRecorderVideoConfiguration *)videoConfiguration
+error:(NSError **)outError;
 
-/\*\* \* @brief 停止采集 \*/ - (void)stopCapturing;
+/** 
+* @brief 开始采集音视频，调用此方法将请求音视频的使用权限（如果指定音视频数据源为摄像头或麦克风的话） 
+* @paramcompletionHandler调用完成的回调，audioGranted：是否获得音频权限，audioError：音频组件初始化发生的错误，videoGranted：是否获得了视频的采集权限
+videoError：视频组件初始化发生的错误
+*/
+ 
+- (void)startCapturingWithCompletionHandler:(void(^(BOOLaudioGranted, NSError *audioError, BOOL videoGranted, NSError*videoError))completionHandler;
 
-/\*\* \* @brief 使用默认配置开始录制 \* @param outError 如果发生错误，返回发生的错误 \* @return
-设置成功返回 YES，否则返回 NO \*/ - (BOOL)startRecordingWithError:(NSError
-\*\*)outError;
+/** 
+* @brief 开始采集音视频，调用此方法将请求音视频的使用权限（如果指定音视频数据源为摄像头或麦克风的话） 
+* @paramcompromise 是否允许妥协部分不受当前设备支持的参数以保证尽最大努力使组件初始化成功 
+* @paramcompletionHandler调用完成的回调，audioGranted：是否获得音频权限，audioError：音频组件初始化发生的错误，videoGranted：是否获得了视频的采集权限，videoError：视频组件初始化发生的错误
+*/
+ 
+- (void)startCapturingWithCompromise:(BOOL)compromise
+completionHandler:(void(^)(BOOL audioGranted, NSError *audioError, BOOLvideoGranted, NSError *videoError))completionHandler;
 
-/\*\* \* @brief 使用指定配置开始录制 \* @param clipConfiguration 录制使用的配置，传入 nil
-将使用默认配置 \* @param outError 如果发生错误，返回发生的错误 \* @return 设置成功返回
-YES，否则返回 NO \*/ -
-(BOOL)startRecordingWithClipConfiguration:(MSVClipConfiguration
-\*)clipConfiguration error:(NSError \*\*)outError;
+/** 
+* @brief 停止采集 
+*/ 
+- (void)stopCapturing;
 
-/\*\* \* @brief 完成录制 \* @param completionHandler
-停止成功的回调，clip：录制产生的主轨道片段对象，error：发生的错误
-\*/ -
-(void)finishRecordingWithCompletionHandler:(void(^)(MSVMainTrackClip
-\*clip, NSError \*error))completionHandler;
+/** 
+* @brief 使用默认配置开始录制 
+* @param outError 如果发生错误，返回发生的错误 
+* @return设置成功返回 YES，否则返回 NO 
+*/ 
 
-/\*\* \* @brief 删除上一段录制的片段 \*/ - (void)discardLastClip;
+- (BOOL)startRecordingWithError:(NSError**)outError;
 
-/\*\* \* @brief 删除指定索引的片段 \* @param index 需要删除的片段的索引 \*/ -
-(void)discardClipAtIndex:(NSUInteger)index;
+/** 
+* @brief 使用指定配置开始录制 
+* @param clipConfiguration 录制使用的配置，传入 nil
+将使用默认配置 
+* @param outError 如果发生错误，返回发生的错误 
+* @return 设置成功返回YES，否则返回 NO 
+*/ 
 
-/\*\* \* @brief 删除所有录制的片段 \*/ - (void)discardAllClips;
+-(BOOL)startRecordingWithClipConfiguration:(MSVClipConfiguration*)clipConfiguration error:(NSError **)outError;
 
-/\*\* \* @brief 切换摄像头 \* @param outError 如果发生错误，返回发生的错误 \* @return
-设置成功返回 YES，否则返回 NO \*/ -
-(BOOL)switchCameraWithError:(NSError \*\*)outError;
+/** 
+* @brief 完成录制 
+* @param completionHandler停止成功的回调，clip：录制产生的主轨道片段对象，error：发生的错误
+*/ 
 
-/\*\* \* @brief 设置水印 \* @param waterMark 水印使用的图片 \* @param position
-水印的位置 \*/ - (void)setWaterMark:(UIImage \*)waterMark
-position:(CGPoint)position;
+-(void)finishRecordingWithCompletionHandler:(void(^)(MSVMainTrackClip*clip,NSError*error))completionHandler;
 
-/\*\* \* @brief 清除水印 \*/ - (void)clearWaterMark;
+/** 
+* @brief 删除上一段录制的片段 
+*/ 
+- (void)discardLastClip;
 
-/\*\* \* @brief 开启设备朝向自动检测 \* @param orientationUpdatedBlock
-设备旋转方向改变时的回调 \*/ -
+/** 
+* @brief 删除指定索引的片段 
+* @param index 需要删除的片段的索引 
+*/
+-(void)discardClipAtIndex:(NSUInteger)index;
+
+/** 
+* @brief 删除所有录制的片段 
+*/ 
+- (void)discardAllClips;
+
+/** 
+* @brief 切换摄像头 
+* @param outError 如果发生错误，返回发生的错误 
+* @return设置成功返回 YES，否则返回 NO 
+*/ 
+
+-(BOOL)switchCameraWithError:(NSError **)outError;
+
+/** 
+* @brief 设置水印 
+* @param waterMark 水印使用的图片 
+* @param position水印的位置 
+*/
+ 
+- (void)setWaterMark:(UIImage *)waterMarkposition:(CGPoint)position;
+
+/** 
+* @brief 清除水印 
+*/ 
+- (void)clearWaterMark;
+
+/** 
+* @brief 开启设备朝向自动检测 
+* @param orientationUpdatedBlock设备旋转方向改变时的回调 
+*/ 
+-
 (void)enableAutoOrientationAdaptionWithOrientationUpdatedBlock:(void(^)(UIDeviceOrientation))orientationUpdatedBlock;
 
-/\*\* \* @brief 关闭设备朝向自动检测 \*/ - (void)disableAutoOrientationAdaption;
+/** 
+* @brief 关闭设备朝向自动检测 
+*/ 
+- (void)disableAutoOrientationAdaption;
 
-/\*\* \* @brief 更新录制器使用的草稿对象 \* @param draft 新的草稿对象 \* @param outError
-如果发生错误，返回发生的错误 \* @return 设置成功返回 YES，否则返回 NO \*/ -
-(BOOL)updateDraft:(MSVDraft \*)draft error:(NSError \*\*)outError;
+/** 
+* @brief 更新录制器使用的草稿对象 
+* @param draft 新的草稿对象 
+* @param outError如果发生错误，返回发生的错误 
+* @return 设置成功返回 YES，否则返回 NO 
+*/
+ 
+-(BOOL)updateDraft:(MSVDraft \*)draft error:(NSError **)outError;
 
-/\*\* \* @brief 背景音效配置对象 \*/ @property(nonatomic, strong, readonly)
-MSVBackgroundAudioConfiguration \*backgroundAudioConfiguration;
+/** 
+* @brief 背景音效配置对象 
+*/
+ 
+@property(nonatomic, strong, readonly)MSVBackgroundAudioConfiguration*backgroundAudioConfiguration;
 
-/\*\* \* @brief 只有在未开始录制或者已经删除所有已录制的片段之后才能设置或取消背景音乐，设置的背景音乐信息会体现在
-draft.audioClips 中而不会直接编码到生成的录制文件当中，以便在编辑阶段可以随时替换背景音乐 \* @param
-configuration 背景音效配置对象，传入 nil 清空背景音效 \* @param outError 如果发生错误，返回发生的错误
-\* @return 设置成功返回 YES，否则返回 NO \*/ -
-(BOOL)setBackgroundAudioWithConfiguration:(MSVBackgroundAudioConfiguration
-\*)configuration error:(NSError \*\*)outError;
+/** 
+* @brief 只有在未开始录制或者已经删除所有已录制的片段之后才能设置或取消背景音乐，设置的背景音乐信息会体现在draft.audioClips 中而不会直接编码到生成的录制文件当中，以便在编辑阶段可以随时替换背景音乐 
+* @param configuration 背景音效配置对象，传入 nil 清空背景音效 
+* @param outError 如果发生错误，返回发生的错误
+* @return 设置成功返回 YES，否则返回 NO 
+*/ 
 
-/\*\* \* @brief 外部写入视频数据接口，使用该接口导入视频数据请保证配置 videoConfiguration.source =
-MSVVideoSourceExtern \* @param videoData 待写入的视频数据 \* @param outError
-如果发生错误，返回发生的错误 \* @return 设置成功返回 YES，否则返回 NO \*/ -
-(BOOL)writeVideoData:(CMSampleBufferRef)videoData error:(NSError
-\*\*)outError;
+-(BOOL)setBackgroundAudioWithConfiguration:(MSVBackgroundAudioConfiguration
+*)configuration error:(NSError **)outError;
 
-/\*\* \* @brief 外部写入音频数据接口，使用该接口导入视频数据请保证配置 audioConfiguration.source =
-MSVAudioSourceExtern \* @param audioData 待写入的音频数据 \* @param outError
-如果发生错误，返回发生的错误 \* @return 设置成功返回 YES，否则返回 NO \*/ -
-(BOOL)writeAudioData:(CMSampleBufferRef)audioData error:(NSError
-\*\*)outError;
+/** 
+* @brief 外部写入视频数据接口，使用该接口导入视频数据请保证配置 videoConfiguration.source =MSVVideoSourceExtern 
+* @param videoData 待写入的视频数据 
+* @param outError如果发生错误，返回发生的错误 \* @return 设置成功返回 YES，否则返回 NO 
+*/
+ 
+-(BOOL)writeVideoData:(CMSampleBufferRef)videoData error:(NSError
+**)outError;
 
-@end \`\`\`
+/** 
+* @brief 外部写入音频数据接口，使用该接口导入视频数据请保证配置 audioConfiguration.source =MSVAudioSourceExtern 
+* @param audioData 待写入的音频数据 
+* @param outError如果发生错误，返回发生的错误 
+* @return 设置成功返回 YES，否则返回 NO 
+*/ 
 
-\#\# 音频配置 \`\`\`objectivec /\*\* \* @brief 音频录制配置类 \*/ @interface
-MSVRecorderAudioConfiguration : NSObject \<
-MovieousMicrophoneConfiguration \>
+-(BOOL)writeAudioData:(CMSampleBufferRef)audioData error:(NSError
+**)outError;
 
-/\*\* \* @brief 音频输入源，默认为 MSVAudioSourceMicrophone \*/ @property
-(nonatomic, assign) MSVAudioSource source;
+@end 
+```
 
-/\*\* \* @brief 采集音频数据的声道数，默认为 1 \* @warning 并非所有采集设备都支持多声道数据的采集 \*/
+## 音频配置 
+```
+ /** 
+ * @brief 音频录制配置类 
+ */
+ @interfaceMSVRecorderAudioConfiguration : NSObject <
+MovieousMicrophoneConfiguration >
+
+/** 
+* @brief 音频输入源，默认为 MSVAudioSourceMicrophone 
+*/ 
+@property(nonatomic, assign) MSVAudioSource source;
+
+/** 
+* @brief 采集音频数据的声道数，默认为 1 
+* @warning 并非所有采集设备都支持多声道数据的采集 
+*/
 @property (assign, nonatomic) NSUInteger numberOfChannels;
 
-/\*\* \* @brief 音频采样率 sampleRate 默认为 MSVAudioSampleRate\_44100Hz \*/
+/** 
+* @brief 音频采样率 sampleRate 默认为 MSVAudioSampleRate\_44100Hz 
+*/
 @property (assign, nonatomic) MSVAudioSampleRate sampleRate;
 
-/\*\* \* @brief 音频编码码率 bitRate 默认为 MSVAudioBitRate\_128Kbps \*/
+/** 
+* @brief 音频编码码率 bitRate 默认为 MSVAudioBitRate_128Kbps 
+*/
 @property (assign, nonatomic) MSVAudioBitRate bitRate;
 
-/\*\* \* @brief 创建一个默认配置的 MSVAudioConfiguration 实例. \* @return 创建的默认
-MSVAudioConfiguration 对象 \*/ + (instancetype)defaultConfiguration;
+/** 
+* @brief 创建一个默认配置的 MSVAudioConfiguration 实例. 
+* @return 创建的默认MSVAudioConfiguration 对象 
+*/ 
++ (instancetype)defaultConfiguration;
 
-/\*\* \* @brief 验证对象是否有效 \* @param outError 如果发生错误，返回发生的错误 \* @return
-有效返回 YES，无效返回 NO \*/ - (BOOL)validateWithError:(NSError
-\*\*)outError;
+/** 
+* @brief 验证对象是否有效 
+* @param outError 如果发生错误，返回发生的错误 
+* @return有效返回 YES，无效返回 NO 
+*/
+ 
+- (BOOL)validateWithError:(NSError**)outError;
 
-@end \`\`\`&#8;
+@end 
+```
 
-\#\# 视频配置 \`\`\`objectivec /\*\* \* @brief 视频录制配置类 \*/ @interface
-MSVRecorderVideoConfiguration : NSObject \< MovieousCameraConfiguration
-\>
+## 视频配置 
+```
+ /** 
+ * @brief 视频录制配置类 
+ */ 
+ @interfaceMSVRecorderVideoConfiguration : NSObject < MovieousCameraConfiguration>
 
-/\*\* \* @brief 视频输入源，默认为 MSVAudioSourceMicrophone \*/ @property
-(nonatomic, assign) MSVVideoSource source;
+/** 
+* @brief 视频输入源，默认为 MSVAudioSourceMicrophone 
+*/ 
+@property(nonatomic, assign) MSVVideoSource source;
 
-/\*\* \* @brief 使用 MSVVideoSourceCamera 时采集的视频数据的帧率，默认为 30 \*/ @property
-(assign, nonatomic) NSUInteger frameRate;
+/** 
+* @brief 使用 MSVVideoSourceCamera 时采集的视频数据的帧率，默认为 30 
+*/ 
+@property(assign, nonatomic) NSUInteger frameRate;
 
-/\*\* \* @brief 使用 MSVVideoSourceCamera 时采集的视频的分辨率，默认为
-AVCaptureSessionPresetHigh \*/ @property (strong, nonatomic)
-AVCaptureSessionPreset cameraResolution;
+/** 
+* @brief 使用 MSVVideoSourceCamera 时采集的视频的分辨率，默认为AVCaptureSessionPresetHigh 
+*/ @property (strong, nonatomic)AVCaptureSessionPreset cameraResolution;
 
-/\*\* \* @brief 使用 MSVVideoSourceCamera 时前置预览是否开启镜像，默认为 YES \*/
+/** 
+* @brief 使用 MSVVideoSourceCamera 时前置预览是否开启镜像，默认为 YES 
+*/
 @property (assign, nonatomic) BOOL mirrorFrontPreview;
 
-/\*\* \* @brief 使用 MSVVideoSourceCamera 时后置预览是否开启镜像，默认为 NO \*/ @property
-(assign, nonatomic) BOOL mirrorBackPreview;
+/** 
+* @brief 使用 MSVVideoSourceCamera 时后置预览是否开启镜像，默认为 NO 
+*/ 
+@property(assign, nonatomic) BOOL mirrorBackPreview;
 
-/\*\* \* @brief 使用 MSVVideoSourceCamera 时前置摄像头，录制的流是否开启镜像，默认 NO \*/
+/** 
+* @brief 使用 MSVVideoSourceCamera 时前置摄像头，录制的流是否开启镜像，默认 NO 
+*/
 @property (assign, nonatomic) BOOL mirrorFrontEncoded;
 
-/\*\* \* @brief 使用 MSVVideoSourceCamera 时后置摄像头，录制的流是否开启镜像，默认 NO \*/
+/** 
+* @brief 使用 MSVVideoSourceCamera 时后置摄像头，录制的流是否开启镜像，默认 NO 
+*/
 @property (assign, nonatomic) BOOL mirrorBackEncoded;
 
-/\*\* \* @brief 使用 MSVVideoSourceCamera 时采集摄像头位置，默认为
-AVCaptureDevicePositionBack \*/ @property (assign, nonatomic)
-AVCaptureDevicePosition cameraPosition;
+/** 
+* @brief 使用 MSVVideoSourceCamera 时采集摄像头位置，默认为
+AVCaptureDevicePositionBack 
+*/ @property (assign, nonatomic)AVCaptureDevicePosition cameraPosition;
 
-/\*\* \* @brief 使用 MSVVideoSourceCamera 时的采集摄像头的旋转方向，默认为
-AVCaptureVideoOrientationPortrait \*/ @property (assign, nonatomic)
-AVCaptureVideoOrientation cameraOrientation;
+/** 
+* @brief 使用 MSVVideoSourceCamera 时的采集摄像头的旋转方向，默认为AVCaptureVideoOrientationPortrait 
+*/ 
+@property (assign, nonatomic)AVCaptureVideoOrientation cameraOrientation;
 
-/\*\* \* @brief 编码时的视频分辨率，默认 (1280, 720) \* @discussion
-需要注意的是，这个参数影响的是视频编码时的分辨率，而非摄像头采集到数据的预览大小，传递给编码器的图像尺寸与此尺寸不同时，会按照保持比例并填充的方式生成最终的视频，从而确保图像不会出现压缩的现象（但编码视频的比例与采集视频的比例不同时会出现裁剪的现象）。
-\*/ @property (assign, nonatomic) CGSize size;
+/** 
+* @brief 编码时的视频分辨率，默认 (1280, 720) 
+* @discussion需要注意的是，这个参数影响的是视频编码时的分辨率，而非摄像头采集到数据的预览大小，传递给编码器的图像尺寸与此尺寸不同时，会按照保持比例并填充的方式生成最终的视频，从而确保图像不会出现压缩的现象（但编码视频的比例与采集视频的比例不同时会出现裁剪的现象）。
+*/ 
+@property (assign, nonatomic) CGSize size;
 
-/\*\* \* @brief 平均视频编码码率。默认为 1024\*1000 \* @discussion 单位为 bps(Bits per
-Second)。该参数的视频编码实际过程中，并不是恒定的数值，所以只能设定平均视频编码码率。 \*/ @property (nonatomic,
-assign) NSUInteger averageVideoBitRate;
+/** 
+* @brief 平均视频编码码率。默认为 1024 * 1000 
+* @discussion 单位为 bps(Bits perSecond)。该参数的视频编码实际过程中，并不是恒定的数值，所以只能设定平均视频编码码率。 
+*/ 
+@property (nonatomic,assign) NSUInteger averageVideoBitRate;
 
-/\*\* \* @brief 视频编码关键帧最大间隔（GOP）。 \* @discussion h.264
-编码时，两个关键帧之间间隔的最多的帧数，一般为 fps
-的两倍或者三倍。默认为 2\*fps \*/ @property (nonatomic, assign)
+/** 
+* @brief 视频编码关键帧最大间隔（GOP）。 
+* @discussion h.264编码时，两个关键帧之间间隔的最多的帧数，一般为 fps的两倍或者三倍。默认为 2* fps 
+*/ 
+@property (nonatomic, assign)
 NSUInteger videoMaxKeyframeInterval;
 
-/\*\* \* @brief H.264 编码时使用的 Profile Level。 \* @discussion 默认情况下使用
-AVVideoProfileLevelH264HighAutoLevel，如果对于视频编码有额外的需求并且知晓该参数带来的影响可以自行更改。
-\* @warning 当你不清楚该参数更改对分辨率要求，码率等影响时，请不要随意更改。 \*/ @property (nonatomic,
-copy) NSString \*videoProfileLevel;
+/** 
+* @brief H.264 编码时使用的 Profile Level。 
+* @discussion 默认情况下使用AVVideoProfileLevelH264HighAutoLevel，如果对于视频编码有额外的需求并且知晓该参数带来的影响可以自行更改。
+* @warning 当你不清楚该参数更改对分辨率要求，码率等影响时，请不要随意更改。 
+*/
+ 
+@property (nonatomic,copy) NSString *videoProfileLevel;
 
-/\*\* \* @brief 创建一个默认配置的 MSVVideoConfiguration 实例. \* @return 创建的默认
-MSVVideoConfiguration 对象 \*/ + (instancetype)defaultConfiguration;
+/** 
+* @brief 创建一个默认配置的 MSVVideoConfiguration 实例. 
+* @return 创建的默认MSVVideoConfiguration 对象 
+*/ 
++ (instancetype)defaultConfiguration;
 
-/\*\* \* @brief 验证对象是否有效 \* @param outError 如果发生错误，返回发生的错误 \* @return
-有效返回 YES，无效返回 NO \*/ - (BOOL)validateWithError:(NSError
-\*\*)outError;
+/** 
+* @brief 验证对象是否有效 
+* @param outError 如果发生错误，返回发生的错误 
+* @return有效返回 YES，无效返回 NO 
+*/ 
 
-@end \`\`\`
+- (BOOL)validateWithError:(NSError**)outError;
 
-\#\# 编辑器 \`\`\`objectivec extern NSString
-\*kMSVEditorCurrentTimeUpdatedNotification;
+@end 
+```
 
-@class MSVEditor; @protocol MSVEditorDelegate \<NSObject\>
+## 编辑器 
+```
+*kMSVEditorCurrentTimeUpdatedNotification;
 
-@optional - (void)editor:(MSVEditor \*)editor
+@class MSVEditor; @protocol MSVEditorDelegate<NSObject>
+
+@optional - (void)editor:(MSVEditor *)editor
 currentTimeDidUpdate:(NSTimeInterval)currentTime;
 
-\- (void)editor:(MSVEditor \*)editor playStateChanged:(BOOL)playing;
+- (void)editor:(MSVEditor *)editor playStateChanged:(BOOL)playing;
 
 @end
 
 @interface MSVEditor : NSObject
 
-/\*\* \* @brief 底层，草稿对象，相关编辑请通过该草稿对象进行操作 \*/ @property (nonatomic,
-strong, readonly) MSVDraft \*draft;
+/** 
+* @brief 底层，草稿对象，相关编辑请通过该草稿对象进行操作 
+*/ 
 
-/\*\* \* @brief 编辑预览视图 \*/ @property (nonatomic, strong, readonly)
-UIView \*preview;
+@property (nonatomic,strong, readonly) MSVDraft *draft;
 
-/\*\* \* @brief 视频内容在 preview 中展示的区域 \*/ @property (nonatomic, assign,
-readonly) CGRect contentFrame;
+/** 
+* @brief 编辑预览视图 
+*/ 
 
-/\*\* \* @brief 预览视图的填充模式，默认为 MovieousScalingModeAspectFit \*/ @property
-(nonatomic, assign) MovieousScalingMode previewScalingMode;
+@property (nonatomic, strong, readonly)UIView *preview;
 
-/\*\* \* @brief 当前播放进度 \*/ @property (nonatomic, assign, readonly)
-NSTimeInterval currentTime;
+/** 
+* @brief 视频内容在 preview 中展示的区域 
+*/ 
+@property (nonatomic, assign,readonly) CGRect contentFrame;
 
-/\*\* \* @brief 当前是否正在播放 \*/ @property (nonatomic, assign, readonly)
-BOOL playing;
+/** 
+* @brief 预览视图的填充模式，默认为 MovieousScalingModeAspectFit 
+*/ 
+@property(nonatomic, assign) MovieousScalingMode previewScalingMode;
 
-/\*\* \* @brief 是否循环播放 \*/ @property (nonatomic, assign) BOOL loop;
+/** 
+* @brief 当前播放进度 
+*/ 
+@property (nonatomic, assign, readonly)NSTimeInterval currentTime;
 
-/\*\* \* @brief 编辑器代理对象 \*/ @property (nonatomic, weak)
-id\<MSVEditorDelegate\> delegate;
+/** 
+* @brief 当前是否正在播放 
+*/ 
+@property (nonatomic, assign, readonly)BOOL playing;
 
-/\*\* \* @brief 代理方法回调的队列，默认为主队列 \*/ @property (nonatomic, strong)
-dispatch\_queue\_t delegateQueue;
+/** 
+* @brief 是否循环播放 
+*/ 
+@property (nonatomic, assign) BOOL loop;
 
-/\*\* \* @brief 通过音视频 URL 初始化一个 MSVEditor 对象 \* @param URL 音视频地址 \*
-@param outError 如果发生错误，返回发生的错误 \* @return 初始化成功则返回草稿对象，失败返回 nil \*/ -
-(instancetype)initWithAVURL:(NSURL \*)URL error:(NSError \*\*)outError;
+/** 
+* @brief 编辑器代理对象 
+*/ 
+@property (nonatomic, weak)id<MSVEditorDelegate> delegate;
 
-/\*\* \* @brief 使用图片 URL 初始化一个 MSVEditor 对象 \* @param URL 图片地址 \* @param
-outError 如果发生错误，返回发生的错误 \* @return 初始化成功则返回草稿对象，失败返回 nil \*/ -
-(instancetype)initWithImageURL:(NSURL \*)URL error:(NSError
-\*\*)outError;
+/** 
+* @brief 代理方法回调的队列，默认为主队列 
+*/ 
+@property (nonatomic, strong)dispatch_queue_t delegateQueue;
 
-/\*\* \* @brief 使用一个草稿对象初始化一个 MSVEditor 对象 \* @param draft 草稿对象 \*
-@param outError 如果发生错误，返回发生的错误 \* @return 初始化成功则返回草稿对象，失败返回 nil \*/ -
-(instancetype)initWithDraft:(MSVDraft \*)draft error:(NSError
-\*\*)outError;
+/** 
+* @brief 通过音视频 URL 初始化一个 MSVEditor 对象 
+* @param URL 音视频地址 
+* @param outError 如果发生错误，返回发生的错误 
+* @return 初始化成功则返回草稿对象，失败返回 nil 
+*/ 
 
-/\*\* \* @brief 开始预览 \*/ - (void)play;
+-(instancetype)initWithAVURL:(NSURL *)URL error:(NSError **)outError;
 
-/\*\* \* @brief 暂停预览 \*/ - (void)pause;
+/** 
+* @brief 使用图片 URL 初始化一个 MSVEditor 对象 
+* @param URL 图片地址 
+* @param outError 如果发生错误，返回发生的错误 
+* @return 初始化成功则返回草稿对象，失败返回 nil 
+*/ 
 
-/\*\* \* @brief 播放器快进到相应的位置 \* @param time 目的位置 \* @param
-completionHandler 快进结束的回调，finished：快进是否完成。 \*/ -
-(void)seekToTime:(NSTimeInterval)time completionHandler:(void (^)(BOOL
+-(instancetype)initWithImageURL:(NSURL *)URL error:(NSError**)outError;
+
+/** 
+* @brief 使用一个草稿对象初始化一个 MSVEditor 对象 
+* @param draft 草稿对象 
+* @param outError 如果发生错误，返回发生的错误 
+* @return 初始化成功则返回草稿对象，失败返回 nil
+*/
+ 
+-(instancetype)initWithDraft:(MSVDraft *)draft error:(NSError
+**)outError;
+
+/** 
+* @brief 开始预览 
+*/ 
+- (void)play;
+
+/** 
+* @brief 暂停预览 
+*/ 
+- (void)pause;
+
+/** 
+* @brief 播放器快进到相应的位置 
+* @param time 目的位置 
+* @paramcompletionHandler 快进结束的回调，finished：快进是否完成。 
+*/ 
+-(void)seekToTime:(NSTimeInterval)timecompletionHandler:(void (^)(BOOL
 finished))completionHandler;
 
-@end \`\`\`
+@end 
+```
 
-\#\# 导出器 \`\`\`objectivec NS\_ASSUME\_NONNULL\_BEGIN
-
+## 导出器 
+```
 @interface MSVVideoExporter : NSObject
 
-/\*\* \* @brief 草稿对象 \*/ @property (nonatomic, strong, readonly,
-nullable) MSVDraft \*draft;
+/** 
+* @brief 草稿对象 
+*/ 
 
-/\*\* \* @brief 导出任务是否正在运行 \*/ @property (nonatomic, assign) BOOL
-running;
+@property (nonatomic, strong, readonly,nullable) MSVDraft *draft;
 
-/\*\* \* @brief 是否同时将视频导出到相册，默认为 NO \*/ @property (assign, nonatomic)
-BOOL saveToPhotosAlbum;
+/** 
+* @brief 导出任务是否正在运行 
+*/ 
+@property (nonatomic, assign) BOOLrunning;
 
-/\*\* \* @brief 视频导出的文件类型，默认为 MSVFileTypeMPEG4(.mp4) \*/ @property
-(assign, nonatomic) MSVFileType outputFileType;
+/** 
+* @brief 是否同时将视频导出到相册，默认为 NO 
+*/ 
+@property (assign, nonatomic)BOOL saveToPhotosAlbum;
 
-/\*\* \* @brief 视频导出的路径，只支持本地文件地址，默认为自动生成的地址 \*/ @property (strong,
-nonatomic, nullable) NSURL \*outputURL;
+/** 
+* @brief 视频导出的文件类型，默认为 MSVFileTypeMPEG4(.mp4) 
+*/ 
+@property(assign, nonatomic) MSVFileTypeoutputFileType;
 
-/\*\* \* @brief 视频的码率，默认为原视频的码率 \*/ @property (assign, nonatomic)
-NSUInteger videoBitrate;
+/** 
+* @brief 视频导出的路径，只支持本地文件地址，默认为自动生成的地址 */ 
 
-/\*\* \* @brief 导出视频的声道数量，默认使用原音频的声道数量 \*/ @property (nonatomic, assign)
-UInt32 numberOfChannels;
+@property (strong,nonatomic, nullable) NSURL *outputURL;
 
-/\*\* \* @brief 导出视频的音频采样率，默认使用原音频的采样率 \*/ @property (nonatomic, assign)
-Float64 sampleRate;
+/** 
+* @brief 视频的码率，默认为原视频的码率 
+*/ 
+@property (assign, nonatomic)NSUInteger videoBitrate;
 
-/\*\* \* @brief 导出视频的音频码率，默认使用原视频的码率 \*/ @property (nonatomic, assign)
-Float64 audioBitRate;
+/** 
+* @brief 导出视频的声道数量，默认使用原音频的声道数量 
+*/ 
+@property (nonatomic, assign)UInt32 numberOfChannels;
 
-/\*\* \* @brief 是否设置便于网络环境下的传输，默认为 YES \*/ @property (assign, nonatomic)
-BOOL shouldOptimizeForNetworkUse;
+/** 
+* @brief 导出视频的音频采样率，默认使用原音频的采样率 
+*/ 
+@property (nonatomic, assign)Float64 sampleRate;
 
-/\*\* \* @brief 导出进度回调 \*/ @property (nonatomic, copy, nullable)
-void(^progressHandler)(float progress);
+/** 
+* @brief 导出视频的音频码率，默认使用原视频的码率 
+*/ 
+@property (nonatomic, assign)Float64 audioBitRate;
 
-/\*\* \* @brief 导出失败回调 \*/ @property (nonatomic, copy, nullable)
-void(^failureHandler)(NSError \*error);
+/** 
+* @brief 是否设置便于网络环境下的传输，默认为 YES 
+*/ 
+@property (assign, nonatomic)BOOL shouldOptimizeForNetworkUse;
 
-/\*\* \* @brief 导出成功回调 \*/ @property (nonatomic, copy, nullable)
-void(^completionHandler)(NSURL \*URL);
+/** 
+* @brief 导出进度回调 
+*/ 
+@property (nonatomic, copy, nullable)void(^progressHandler)(float progress);
 
-/\*\* \* @brief 使用 draft 初始化导出对象 \* @param draft 需要导出的草稿对象 \* @param
-outError 如果发生错误，返回发生的具体错误 \* @return 如果初始化成功返回初始化后的对象，否则返回 nil \*/ -
-(instancetype \_Nullable)initWithDraft:(MSVDraft \*\_Nullable)draft
-error:(NSError \* \_Nullable \* \_Nullable)outError;
+/** 
+* @brief 导出失败回调 
+*/
 
-/\*\* \* @brief 更新草稿 \* @param draft 新草稿 \* @param outError
-如果发生错误，返回发生的具体错误 \* @return 更新成功返回 YES，否则返回 NO
-\*/ - (BOOL)updateDraft:(MSVDraft \*)draft error:(NSError \* \_Nullable
-\* \_Nullable)outError;
+@property (nonatomic, copy, nullable)void(^failureHandler)(NSError *error);
 
-/\*\* \* @brief 开始导出任务 \*/ - (void)startExport;
+/** 
+* @brief 导出成功回调 
+*/
+ 
+@property (nonatomic, copy, nullable)void(^completionHandler)(NSURL *URL);
 
-/\*\* \* @brief 取消导出任务 \*/ - (void)cancelExport;
+/** 
+* @brief 使用 draft 初始化导出对象 
+* @param draft 需要导出的草稿对象 
+* @param outError 如果发生错误，返回发生的具体错误 
+* @return 如果初始化成功返回初始化后的对象，否则返回 nil 
+*/ 
+-(instancetype _Nullable)initWithDraft:(MSVDraft *_Nullable)draft
+error:(NSError * _Nullable * _Nullable)outError;
 
-NS\_ASSUME\_NONNULL\_END
+/** 
+* @brief 更新草稿 
+* @param draft 新草稿 
+* @param outError如果发生错误，返回发生的具体错误 *
+*  @return 更新成功返回 YES，否则返回 NO
+*/ 
 
-@end \`\`\`
+- (BOOL)updateDraft:(MSVDraft *)draft error:(NSError * _Nullable*_Nullable)outError;
+
+/** 
+* @brief 开始导出任务 
+*/ 
+- (void)startExport;
+
+/** 
+* @brief 取消导出任务 
+*/ 
+- (void)cancelExport;
+
+NS_ASSUME_NONNULL_END
+
+@end 
