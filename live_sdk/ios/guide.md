@@ -1,15 +1,21 @@
+#使用指南
 {{indexmenu_n>4}}
-\`\`\`objectivec @class MLController;
+
+```
+@class MLController;
 
 @protocol MLControllerDelegate\<NSObject\>
 
 @optional
 
-/\*\* \* @brief 当 \`MLController\` 状态发生改变时被调用 \* @param controller
-调用该方法的 MLController 对象 \* @param state 推流控制器的新状态 \* @param
-error 当推流控制器状态转变为 \`MLStreamStateError\` 时，error 才不为 nil \*/ -
-(void)controller:(MLController \*)controller
-stateDidChange:(MLState)state error:(NSError \*)error;
+/** 
+* @brief 当 `MLController` 状态发生改变时被调用 
+* @param controller 调用该方法的 MLController 对象 
+* @param state 推流控制器的新状态 
+* @param error 当推流控制器状态转变为 `MLStreamStateError` 时，error 才不为 nil 
+*/ 
+-(void)controller:(MLController *)controller
+stateDidChange:(MLState)state error:(NSError *)error;
 
 /\*\* \* @brief 当新的视频数据产生后将调用该方法 \* @param controller 调用该方法的
 \`MLController\` 对象 \* @param videoData 视频数据 \* @return 处理完成的视频数据 \*/ -
@@ -235,33 +241,41 @@ assign) NSUInteger averageBitRate;
 /\*\* \* @brief 创建默认配置对象 \* @return 创建完成的默认配置对象 \*/ +
 (instancetype)defaultConfiguration;
 
-@end \`\`\`
+@end 
 
-\#\#\# 类型定义（MLTypeDefines） \`\`\`objectivec /** \* @brief 视频源的类型 \*/
-typedef NS\_ENUM(NSInteger, MLVideoSource) { /**
-
-``` 
-   * @brief 摄像头采集
-   */
-  MLVideoSourceCamera,
 ```
+
+### 类型定义（MLTypeDefines）
+ 
+```
+/** 
+* @brief 视频源的类型 
+*/
+typedef NS\_ENUM(NSInteger, MLVideoSource) { 
+/**
+* @brief 摄像头采集
+  */
+ MLVideoSourceCamera,
 
 };
 
-/** \* @brief 音频源类型 \*/ typedef NS\_ENUM(NSInteger, MLAudioSource) { /**
-
-``` 
+/** 
+* @brief 音频源类型 
+*/ 
+typedef NS_ENUM(NSInteger, MLAudioSource) { 
+/**
    * @brief 麦克风采集
    */
   MLAudioSourceMicrophone,
-```
 
 };
 
-/** \* @brief 编码的音频码率 \*/ typedef NS\_ENUM(NSInteger, MLAudioBitRate) {
+/** 
+* @brief 编码的音频码率 
+*/ 
+typedef NS_ENUM(NSInteger, MLAudioBitRate) {
 /**
 
-``` 
    * @brief 64 Kbps 码率
    */
   MLAudioBitRate64Kbps = 64000,
@@ -273,16 +287,18 @@ typedef NS\_ENUM(NSInteger, MLVideoSource) { /**
    * @brief 128 Kbps 码率
    */
   MLAudioBitRate128Kbps = 128000,
-```
 
 };
 
-/** \* @brief 日志级别 \*/ typedef NS\_ENUM(NSUInteger, MLLogLevel){ /**
+/** 
+* @brief 日志级别 
+*/ 
+typedef NS_ENUM(NSUInteger, MLLogLevel){ 
+/**
 
-``` 
    * @brief 不打印日志
    */
-  MLLogLevelOff       = 0,
+  MLLogLevelOff = 0,
   /**
    * @brief 只打印 error 日志
    */
@@ -303,13 +319,12 @@ typedef NS\_ENUM(NSInteger, MLVideoSource) { /**
    * @brief 打印 error, warning, info, debug and verbose 日志
    */
   MLLogLevelVerbose,
-```
 
 };
 
 typedef NS\_ENUM(NSInteger, MLState) {
 
-``` 
+
   /**
    * @brief 初始状态
    */
@@ -342,14 +357,13 @@ typedef NS\_ENUM(NSInteger, MLState) {
    * @brief 正在采集，而未开始推流
    */
   MLStateCapturing,
-```
 
 };
 
-/** \* @brief Network transition type \*/ typedef NS\_ENUM(NSUInteger,
-MLNetworkStateTransition) { /**
+/** 
+* @brief Network transition type 
+*/ typedef NS_ENUM(NSUInteger,MLNetworkStateTransition) { /**
 
-``` 
    * @brief Unknown transition
    */
   MLNetworkStateTransitionUnknown = 0,
@@ -377,12 +391,13 @@ MLNetworkStateTransition) { /**
    * @brief Transition from WWAN(4G, 3G, etc) to WiFi
    */
   MLNetworkStateTransitionWWANToWiFi,
-```
 
 };
 
-/\*\* \* @brief 接收网络状态切换状态变更通知的闭包 \*/ typedef
-BOOL(^ConnectionChangeActionHandler)(MLNetworkStateTransition
+/** 
+* @brief 接收网络状态切换状态变更通知的闭包 
+*/ 
+typedef BOOL(^ConnectionChangeActionHandler)(MLNetworkStateTransition
 transition);
 
-\`\`\`
+```
