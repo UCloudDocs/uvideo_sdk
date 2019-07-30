@@ -11,8 +11,9 @@
 
 SDK 的接口设计，遵循了如下的原则：
 
-- 接口类均以 `U` 开头 - 参数类均以 `UxxxParam` 命名 
-- 回调类均以 `UxxxListener` 命名
+- 接口类均以 U 开头
+- 参数类均以 UxxxParam 命名 
+- 回调类均以 UxxxListener 命名
 
 ## 核心接口
 
