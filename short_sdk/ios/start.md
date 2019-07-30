@@ -6,9 +6,13 @@ Objective-C 的基础语法。
 ## 添加依赖
  需要进入UCloud控制台创建所需且匹配业务的SDK，后将MovieousShortVideo引入工程中。
 
-## 
-引入相关头文件 在您需要集成短视频SDK的页面源文件中添加如下语句 ```objectivec \#import
-\<MovieousShortVideo/MovieousShortVideo.h\> ```
+## 引入相关头文件 
+在您需要集成短视频SDK的页面源文件中添加如下语句
+
+ Objectivec
+ ```
+ #import<MovieousShortVideo/MovieousShortVideo.h> 
+ ```
 
 下面，可以根据自己的需求，选择性地集成视频录制、视频编辑或视频导出模块 
 ## 视频录制 
@@ -31,11 +35,9 @@ Objectivec
 
 生成录制核心控制对象; 
 
-
 Objectivec
 
 ```
-
   _recorder = [[MSVRecorder alloc] initWithAudioConfiguration:audioConfiguration videoConfiguration:videoConfiguration error:&error];
   if (error) {
       SHOW_ERROR_ALERT;
@@ -47,14 +49,13 @@ Objectivec
   _recorder.delegate = self;
   // 将预览视图插入视图栈中，以便预览摄像头采集结果
   _recorder.preview.frame = self.view.frame;
-  [self.view insertSubview:_recorder.preview atIndex:0];
-
+  [self.view insertSubview:_recorder.preview atIndex:0]
 
 ```
 
 开始音视频采集 
 
-objectivec
+Objectivec
 
 ``` 
   [_recorder startCapturingWithCompletionHandler:^(BOOL audioGranted, NSError *audioError, BOOL videoGranted, NSError *videoError) {
@@ -79,7 +80,6 @@ objectivec
       }
   }];
 
-
 ```
 
 开始录制片段
@@ -90,12 +90,8 @@ Objectivec
   if (![_recorder startRecordingWithClipConfiguration:config error:&error]) {
       SHOW_ERROR_ALERT;
       return;
-  }
-  
+  } 
 ```
-
-
-
 完成当前片段录制 
 
 Objectivec
@@ -109,10 +105,8 @@ Objectivec
   }];
   
 ```
-
-
 完成当前片段录制之后还可以回到`开始录制片段`的步骤继续进行下一个片段的录制，所有录制好的片段将会顺序拼接为一个视频草稿;保存在
-`\_recorder.draft\` 对象中，可传入编辑器进行编辑或传入导出器直接导出为一个合成后的文件
+`_recorder.draft` 对象中，可传入编辑器进行编辑或传入导出器直接导出为一个合成后的文件
 
 ## 视频编辑
  创建编辑器核心控制类
@@ -132,8 +126,6 @@ Objectivec
   _editor.loop = YES;
   
 ```
-
-
 预览草稿 
 
 Objectivec
@@ -142,12 +134,9 @@ Objectivec
   [_editor play];
 ```
 
-
-
 - 进行视频编辑 `MovieousShortVideo` 使用 `MSVDraft`
 对象存储视频的编辑信息，你可以根据需求对
 `_editor.draft`的参数进行任意调整，调整之后预览视图会实时刷新为调整参数之后的内容，下面演示一下对视频进行剪辑操作
-
 
 Objectivec
 
@@ -160,8 +149,6 @@ Objectivec
   };
   
 ```
-
-
 ## 视频导出 
 创建导出核心控制对象 
 
@@ -191,8 +178,6 @@ Objectivec
       SHOW_ERROR_ALERT_FOR(wSelf);
   };
 ```
-
-
 开始导出 
 
 Objectivec
