@@ -100,7 +100,7 @@ android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
 ```
 // MOVIEOUS_SIGN，在 Movieous 后台创建 APP 时生成，需要在初始化时传递给 SDK 进行鉴权
-UShortVideoEnv.init(context, MOVIEOUS\_SIGN) 
+UShortVideoEnv.init(context, MOVIEOUS_SIGN) 
 ```
 
 ## 视频录制
