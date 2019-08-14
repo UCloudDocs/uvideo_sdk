@@ -292,7 +292,7 @@ MLAudioConfiguration : NSObject < NSCopying >
 @end 
  ```
 
-### 视频参数累（MLVideoConfiguration） 
+### 视频参数类（MLVideoConfiguration） 
 ```
 objectivec @interface
 MLVideoConfiguration : NSObject < NSCopying >
