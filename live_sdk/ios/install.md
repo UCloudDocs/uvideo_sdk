@@ -1,5 +1,5 @@
 #如何安装
-{{indexmenu_n>2}}
+
 
 ### 安装 Cocoapods
 

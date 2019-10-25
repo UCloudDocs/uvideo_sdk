@@ -1,6 +1,6 @@
 #如何安装
 
-{{indexmenu_n>3}}
+
 ## Cocoapods集成
 
 ### 安装 Cocoapods

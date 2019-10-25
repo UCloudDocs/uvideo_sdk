@@ -1,5 +1,5 @@
 # 快速开始
-{{indexmenu_n>3}}
+
 
 直播SDK分别使用 `MLAudioConfiguration` 和`MLVideoConfiguration`对象进行音频和视频的参数配置，这两个配置对象都支持使用`-defaultConfiguration`方法获取一个默认的配置对象，在获取到默认的配置对象之后我们可以根据业务需求对相关参数进行更改供后续使用。
 
