@@ -1,4 +1,4 @@
-#快速开始
+# 快速开始
 
 Hi亲爱的开发者，欢迎使用UCloud短视频SDK。如下内容将引导您在自己的IOS工程中集成短视频录制，编辑及导出功能。首先，我们假定您已了解
 Objective-C 的基础语法。
@@ -22,7 +22,7 @@ Objective-C 的基础语法。
 ![](/images/short_sdk/ios/authorization.png)
 
 生成音频和视频的配置对象并根据需求进行相关参数的更改
- 
+
 Objectivec
 
 ``` 
@@ -110,7 +110,7 @@ Objectivec
 
 ## 视频编辑
  创建编辑器核心控制类
-  
+
  Objectivec
 
 ``` 
