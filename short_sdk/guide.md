@@ -44,7 +44,7 @@ SDK
 2、在应用启动时调用 \[MovieousShortVideo registerWithLicense:${license}\]; 方法注册
 SDK，其中 ${license} 填写 lincese.txt 中的字符串
 
-3、参照 <https://docs.ucloud.cn/video/uvideo_sdk/short_sdk/ios/start> 进行
+3、参照 <https://docs.ucloud.cn/uvideo_sdk/short_sdk/ios/start> 进行
 SDK 其他相关集成工作
 
 Android License使用说明：
@@ -54,5 +54,5 @@ SDK
 
 2、在应用启动时通过 UShortVideoEnv 中的 init 接口，把 lincese.txt 文件中的字符串传递给 SDK 进行鉴权。
 
-3、参照 <https://docs.ucloud.cn/video/uvideo_sdk/short_sdk/android/start>
+3、参照 <https://docs.ucloud.cn/uvideo_sdk/short_sdk/android/start>
 进行 SDK 其他相关集成工作
