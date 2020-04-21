@@ -1,7 +1,7 @@
 # 概览
 
 * 短视频SDK
-    * [产品简介.](/uvideo_sdk/short_sdk/intro)
+    * [产品简介](/uvideo_sdk/short_sdk/intro)
     * [使用指南](/uvideo_sdk/short_sdk/guide)
     * [功能列表](/uvideo_sdk/short_sdk/functions)
     * [产品价格](/uvideo_sdk/short_sdk/price)
