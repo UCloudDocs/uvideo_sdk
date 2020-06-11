@@ -113,7 +113,7 @@ mVideoRecorder.setRecordStateListener(this); // 设置视频数据回调
 mVideoRecorder.setVideoFrameListener(this); 
 ```
 
-### 建录制参数类
+### 创建录制参数类
 
 SDK 提供了丰富的录制参数，可以通过以下方式进行配置：
 
