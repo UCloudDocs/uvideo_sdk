@@ -1,6 +1,5 @@
-<div class="sidebar_title icon__video"> 视频工具 UVideoSDK</div>
+# 概览
 
-* [概览](/uvideo_sdk/README)
 * 短视频SDK
     * [产品简介](/uvideo_sdk/short_sdk/intro)
     * [使用指南](/uvideo_sdk/short_sdk/guide)
@@ -34,8 +33,6 @@
         * [使用指南](/uvideo_sdk/live_sdk/android/guide)
    
     
-   
-   
    
    
     
