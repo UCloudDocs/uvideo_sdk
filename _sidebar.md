@@ -1,4 +1,3 @@
-<div class="sidebar_title icon__video"> 视频工具 UVideoSDK</div>
 
 * [概览](/uvideo_sdk/README)
 * 短视频SDK
