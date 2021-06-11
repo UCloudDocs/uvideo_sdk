@@ -1,6 +1,5 @@
 # 概览
 
-
 * 短视频SDK
     * [产品简介](/uvideo_sdk/short_sdk/intro)
     * [使用指南](/uvideo_sdk/short_sdk/guide)
